@@ -1,52 +1,125 @@
 # Article Learning Guide
 
-## Ingest Phase
+> 前置条件：Phase 3 的总结已呈现给用户，用户已选择（或默认进入）文章学习路径。
 
-1. Use FetchURL to read the article content
-2. Save raw content to `_refs/articles/<YYYY-MM-DD>-<slug>.md`
-3. Generate elevator pitch summary:
-   - One-sentence thesis
-   - 3 key insights
-   - Target audience
+## 模式选择
 
-## Learning Modes
+基于文章特征主动推荐：
 
-### Socratic Mode
-Ask guiding questions rather than giving answers:
-- "What problem is the author trying to solve?"
-- "Why do you think they chose this approach?"
-- "What are the limitations of this method?"
+| 文章特征 | 推荐模式 | 理由 |
+|---|---|---|
+| 提出新理论/方法 | **Socratic** | 适合通过提问深入理解逻辑 |
+| 技术教程/实现细节 | **Mentor** | 需要类比和逐步解释 |
+| 综述/ survey 类 | **Connection** | 重点是建立知识网络 |
+| 有争议的观点 | **Debate** | 适合挑战和评估 |
 
-### Mentor Mode
-Explain with analogies and examples:
-- Connect to known concepts
-- Use real-world analogies
-- Provide concrete examples
+用户也可以直接指定："用 Socratic 模式"或"我想看看和 XXX 的联系"。
 
-### Connection Mode
-Link to existing knowledge base:
-- Search for related notes in content/
-- Suggest `[[wiki-links]]` to existing concepts
-- Identify gaps in current knowledge
+---
 
-### Debate Mode
-Challenge assumptions:
-- Present counter-arguments
-- Test edge cases
-- Evaluate trade-offs
+## 学习模式详解
 
-## Note Generation
+### Socratic Mode（苏格拉底模式）
 
-Use template from `article-note-template.md`.
+**定位：** 通过连续提问引导用户自己发现答案，而非直接给结论。
 
-## Directory Assignment
+**对话风格：**
+- 每轮以开放式问题开始
+- 用户回答后，基于回答追问更深层问题
+- 偶尔给出提示，但不直接揭示答案
 
-Based on content keywords:
-- Transformer/Attention/LLM → `10-LLM基础/`
-- RAG/Embedding → `20-RAG工程/`
-- Agent/LangGraph/MCP → `30-Agent工程/`
-- Source code/AI Coding → `40-AI编码与源码/`
-- Java/Spring Boot → `50-后端/`
-- React/Frontend → `60-前端/`
-- Docker/K8s → `70-DevOps/`
-- Uncertain → `00-入门与路线图/`
+**示例对话流：**
+```
+AI:  作者说他解决了 X 问题，你觉得在解决 X 之前，必须先满足什么前提条件？
+用户:  可能需要先解决数据质量的问题？
+AI:  很好。那如果数据质量已经保证了，作者的方案在什么情况下会失效？
+用户:  如果数据分布和训练时不一致？
+AI:  对，这就是领域偏移问题。作者有没有提到这一点？他是怎么处理或回避的？
+```
+
+**适用：** 论文、理论文章、有明确论点的技术博客
+
+---
+
+### Mentor Mode（导师模式）
+
+**定位：** 像导师一样用类比、例子、逐步拆解来讲解。
+
+**对话风格：**
+- 主动建立类比（"你可以把这个理解为..."）
+- 复杂概念拆解成 2-3 个简单步骤
+- 用具体代码/场景举例
+
+**示例对话流：**
+```
+AI:  作者提出的这个注意力机制，你可以把它理解为图书馆的检索系统。Query 是你要找的书名，Key 是书脊上的标签，Value 是书里的内容。你觉得这个类比里，哪一步对应" 找到相关书籍"？
+用户:  应该是 Query 和 Key 的匹配？
+AI:  完全正确。那作者为什么要用 softmax 来做这个匹配，而不是直接取 top-k？
+```
+
+**适用：** 教程、实现细节、新概念介绍
+
+---
+
+### Connection Mode（连接模式）
+
+**定位：** 将新内容与知识库中已有笔记建立连接，识别 gaps。
+
+**对话风格：**
+- 主动搜索并引用知识库中的相关笔记
+- 用 `[[wiki-link]]` 格式建议连接
+- 指出"这个和你之前学的 XXX 有什么关系"
+- 发现知识缺口时标记出来
+
+**示例对话流：**
+```
+AI:  这篇文章讲的检索增强生成（RAG），你在 [[20-RAG工程/向量数据库]] 里也记过类似的概念。作者这里的索引构建方式和你的笔记里有什么不同？
+用户:  我之前只关注了向量检索，这篇文章还提到了关键词混合检索？
+AI:  对，这就是一个新的连接点。我可以帮你把这个补充进去，或者你更想深入理解混合检索的实现原理？
+```
+
+**适用：** 综述、领域入门、已知概念的变体
+
+---
+
+### Debate Mode（辩论模式）
+
+**定位：** 挑战文章的假设、方法论和结论，测试边界情况。
+
+**对话风格：**
+- 主动提出反方观点
+- 追问"如果条件 X 不成立呢？"
+- 评估实验设计的潜在缺陷
+- 对比其他方法的优势
+
+**示例对话流：**
+```
+AI:  作者声称他的方法比 baseline 快 3 倍，但他的实验只在单个数据集上做的。如果这个数据集本身就很小，速度提升的实际意义有多大？
+用户:  确实，大规模场景下不一定有这个优势。
+AI:  而且他的对比 baseline 是一个 5 年前的老方法。如果用最新的 Y 方法作为 baseline，这个优势还存在吗？这是一个公平的对比吗？
+```
+
+**适用：** 论文、有性能/效果声称的文章、方法论文章
+
+---
+
+## 多模式切换
+
+学习过程中用户可以随时切换模式：
+- "换个角度" → 我推荐另一个模式
+- "用 Mentor 模式解释一下" → 立即切换
+- "我想挑战一下这个观点" → 切换到 Debate
+
+切换时保留已积累的洞察，新模式的对话从当前理解水平继续。
+
+---
+
+## 洞察记录
+
+每轮对话结束后，在临时草稿中记录：
+- 本轮核心洞察（一句话）
+- 用户的新理解或疑问
+- 与已有知识的连接点
+- 待深入研究的问题
+
+对话结束时，这些草稿直接填入 `article-note-template.md` 的对应章节。

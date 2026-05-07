@@ -28,35 +28,9 @@ Analyze the URL:
 2. `rm -rf .temp/repos/<repo-name>/.git/`
 3. `mv .temp/repos/<repo-name>/ _refs/repos/<repo-name>/`
 
-### Phase 3: Pre-process
+### Phase 3: Summarize & Present
 
-**Article:** Generate elevator pitch summary (thesis + 3 key insights)
-**Repository:** Analyze directory structure, read README, identify entry points and core modules
-
-### Phase 4: Dialog Learning
-
-**Article modes:** Socratic / Mentor / Connection / Debate
-**Repository perspectives:** Architecture / Feature / Problem
-
-Load the appropriate guide:
-- Article: `references/article-learning-guide.md`
-- Repository: `references/repo-learning-guide.md`
-
-### Phase 5: Generate Notes
-
-Use the appropriate template:
-- Article: `references/article-note-template.md`
-- Repository: `references/repo-note-template.md`
-
-Auto-assign directory based on content keywords.
-
-### Phase 6: Commit and Push
-
-```bash
-git add content/ _refs/
-git commit -m "learn(<type>): <title>"
-git push origin main
-```
+**Goal:** 给用户一个完整的内容概览，让他知道
 
 ## Note on Mermaid
 

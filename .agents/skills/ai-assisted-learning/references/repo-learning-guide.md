@@ -1,59 +1,109 @@
 # Repository Learning Guide
 
-## Ingest Phase
+> 前置条件：Phase 3 的总结已呈现给用户，用户已选择（或默认进入）仓库学习路径。
 
-1. Run `git clone --depth 1 <url> .temp/repos/<repo-name>/`
-2. Remove `.git/` directory: `rm -rf .temp/repos/<repo-name>/.git/`
-3. Move to archive: `mv .temp/repos/<repo-name>/ _refs/repos/<repo-name>/`
-4. Analyze structure:
-   - Read README.md
-   - List top-level directories
-   - Identify entry points (main.py, index.js, etc.)
-   - Find configuration files (pyproject.toml, package.json, etc.)
+## 视角选择
 
-## Learning Perspectives
+基于仓库特征主动推荐：
 
-### Architecture Perspective
-Goal: Understand overall design
+| 仓库特征 | 推荐视角 | 理由 |
+|---|---|---|
+| 框架/库类项目 | **Architecture** | 先理解整体设计再深入 |
+| 工具/CLI 项目 | **Feature** | 从一个具体功能切入更直观 |
+| 为了解决特定问题 | **Problem** | 带着问题驱动学习效率更高 |
 
-Path:
-1. README → project overview
-2. Top-level directories → module boundaries
-3. Core interfaces → public APIs
-4. Dependency graph → module relationships
+用户也可以直接指定："我想先看架构"或"帮我 trace 一下登录流程"。
 
-Output: Mermaid architecture diagram + module responsibility table
+---
 
-### Feature Perspective
-Goal: Understand how a specific feature works
+## 学习视角详解
 
-Path:
-1. Identify feature entry point
-2. Trace call chain using grep/file reading
-3. Identify key implementations
-4. Map data flow
+### Architecture Perspective（架构视角）
 
-Output: Mermaid sequence diagram + key code snippets
+**目标：** 理解整体设计哲学和模块边界
 
-### Problem Perspective
-Goal: Solve a specific question/bug
+**对话流程：**
+1. **概览确认** —— 基于 README 和目录结构，确认用户理解项目定位
+2. **模块拆解** —— 逐层展开核心模块，解释职责边界
+3. **依赖关系** —— 梳理模块间调用关系和数据流
+4. **设计决策** —— 探讨关键设计选择及其权衡
 
-Path:
-1. Search for relevant code using keywords
-2. Analyze context around found code
-3. Trace related execution paths
-4. Form hypothesis and verify
+**示例对话流：**
+```
+AI:  从目录结构看，这个项目分成 core/、adapters/、cli/ 三个主要模块。你觉得 cli/ 依赖 core/ 是自然的，但 adapters/ 放在同一层级而不是 core/ 的子目录，这暗示了什么设计意图？
+用户:  可能 adapters 是可选的？
+AI:  完全正确。这体现了"插件化"思想——core 提供最小可运行集，adapters 是可插拔的扩展。那如果我要新增一个数据库适配器，需要改动 core/ 的代码吗？
+用户:  应该不需要，只要实现 adapter 接口？
+AI:  对，这就是依赖倒置原则。让我看看具体的接口定义...
+```
 
-Output: Analysis notes + fix/implementation ideas
+**输出：** Mermaid 架构图 + 模块职责表
 
-## Note Generation
+---
 
-Use template from `repo-note-template.md`.
+### Feature Perspective（功能视角）
 
-## Directory Assignment
+**目标：** 理解一个具体功能从头到尾的实现
 
-- AI/ML libraries → `30-Agent工程/` or `40-AI编码与源码/`
-- Backend frameworks → `50-后端/`
-- Frontend libraries → `60-前端/`
-- DevOps tools → `70-DevOps/`
-- General utilities → `99-工具与参考/`
+**对话流程：**
+1. **选择功能** —— 用户指定或我推荐一个核心功能
+2. **入口定位** —— 找到该功能的入口函数/路由/命令
+3. **调用链追踪** —— 逐步 trace 代码执行路径
+4. **关键实现** —— 深入核心逻辑，解释设计技巧
+
+**示例对话流：**
+```
+AI:  你选择了"用户认证"这个功能。从 cli/ 的入口看，auth 命令最终调用了 core/auth.py 的 authenticate()。我们先看一下这个函数的签名，它接收什么参数？返回什么？
+用户:  接收 username 和 password，返回一个 token 字典。
+AI:  好。那 password 是怎么验证的？是直接比较字符串吗？
+用户:  不是，它调了一个 hash_password 函数...
+AI:  对，这里用了 bcrypt。为什么不用简单的 MD5 或 SHA256？bcrypt 的核心优势是什么？
+```
+
+**输出：** Mermaid 序列图 + 关键代码片段 + 执行流程说明
+
+---
+
+### Problem Perspective（问题视角）
+
+**目标：** 解决一个具体问题或回答一个特定疑问
+
+**对话流程：**
+1. **明确问题** —— 用户提出具体问题（bug/用法/原理）
+2. **代码搜索** —— 用 grep/文件阅读定位相关代码
+3. **上下文分析** —— 解释代码的上下文和意图
+4. **方案形成** —— 给出解释、修复或实现建议
+
+**示例对话流：**
+```
+用户:  我想知道这个库怎么处理并发请求的？
+AI:  好，我先搜索一下 concurrent、thread、async 这些关键词...
+找到了，在 core/pool.py 里有一个 ConnectionPool 类。看一下它的 get_connection() 方法——它用了信号量（Semaphore）来限制最大连接数。你觉得如果并发请求超过了最大连接数，会发生什么？
+用户:  会阻塞等待？
+AI:  对，但看看它用的 timeout 是多少...如果超时了会抛什么异常？这种设计在你们的场景下合适吗？
+```
+
+**输出：** 问题分析 + 相关代码定位 + 解决方案或建议
+
+---
+
+## 视角切换
+
+学习过程中用户可以随时切换：
+- "架构我大概懂了，能不能 trace 一下登录流程？" → Architecture → Feature
+- "这个模块是怎么处理错误的？" → 任何视角 → Problem
+- "这些功能之间是怎么协作的？" → Feature → Architecture
+
+切换时保留已理解的内容作为上下文。
+
+---
+
+## 洞察记录
+
+每轮对话结束后，在临时草稿中记录：
+- 本轮理解的关键设计点
+- 代码中值得注意的模式或技巧
+- 与用户已有知识的关联
+- 待深入研究的问题
+
+对话结束时，这些草稿填入 `repo-note-template.md` 的对应章节。
