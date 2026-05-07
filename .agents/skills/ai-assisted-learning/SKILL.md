@@ -25,12 +25,17 @@ Analyze the URL:
 
 ### Phase 2: Ingest
 
+**文件命名规范（强制）：**
+- 所有英文文件名**必须全小写**，使用 kebab-case（短横线连接）
+- 示例：`why-we-think-test-time-compute.md` ✓，不是 `Why-We-Think.md` ✗
+- 中文部分保持原样，如 `content/10-LLM基础/`
+
 **Article path:**
 1. FetchURL to read content
-2. Save to `_refs/articles/<YYYY-MM-DD>-<slug>.md`
+2. Save to `_refs/articles/<YYYY-MM-DD>-<slug>.md`（`<slug>` 全小写，kebab-case）
 
 **Repository path:**
-1. `git clone --depth 1 <url> .temp/repos/<repo-name>/`
+1. `git clone --depth 1 <url> .temp/repos/<repo-name>/`（`<repo-name>` 全小写）
 2. `rm -rf .temp/repos/<repo-name>/.git/`
 3. `mv .temp/repos/<repo-name>/ _refs/repos/<repo-name>/`
 
