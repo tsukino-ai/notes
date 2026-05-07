@@ -1,7 +1,7 @@
 # Why We Think — Test-Time Compute 与推理能力
 
 > 原文：https://lilianweng.github.io/posts/2025-05-01-thinking/  
-> 译文：`_refs/articles/translations/2025-05-01-why-we-think.zh.md`  
+> [英文原文](why-we-think-test-time-compute-en.md) | [中文译文](why-we-think-test-time-compute-zh.md)  
 > 作者：Lilian Weng (OpenAI)  
 > 日期：2025-05-01
 

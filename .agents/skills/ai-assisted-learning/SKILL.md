@@ -33,12 +33,33 @@ Analyze the URL:
 **Article path:**
 1. FetchURL 获取原文
 2. Save 原文到 `_refs/articles/<YYYY-MM-DD>-<slug>.md`（`<slug>` 全小写，kebab-case）
-3. **翻译（如果是英文原文，用户未明确拒绝时执行）**
+3. **翻译与网页发布（如果是英文原文，用户未明确拒绝时执行）**
    a. **分析文章特征**：类型（技术博客/论文/文档）、领域（ML/前端/后端/...）、受众
    b. **生成专门翻译提示词**：包含术语保留列表、风格要求、格式要求、输出格式
    c. **启动翻译 subagent**：传入原文 + 翻译提示词，获取完整译文
-   d. **保存译文**：`_refs/articles/translations/<slug>.zh.md`
-   e. **在 content/ 笔记中引用**：在笔记头部添加 `> 译文：_refs/articles/translations/<slug>.zh.md`
+   d. **保存本地译文**：`_refs/articles/translations/<slug>.zh.md`
+   e. **发布到网页（关键！）**：在 `content/<tier>/` 下创建两个文件：
+      - `<slug>-en.md`：英文原文（从 `_refs` 复制，添加 frontmatter）
+      - `<slug>-zh.md`：中文译文（从 translations 复制，添加 frontmatter）
+      - **"合适目录"由内容主题决定**：LLM/推理相关 → `content/10-LLM基础/`，Agent/工具 → `content/30-Agent工程/`，依此类推
+   f. **在笔记中引用**：在笔记头部添加 `> [英文原文](<slug>-en.md) | [中文译文](<slug>-zh.md)`
+
+> **为什么网页版要和笔记放同一目录？**
+> 1. 用户在阅读笔记时可一键跳转到原文/译文
+> 2. 便于在 Obsidian 图谱中建立关联
+> 3. 符合知识库的内容组织逻辑（同主题聚类），而非孤立在专门的"翻译区"
+
+**网页版 frontmatter 模板：**
+```yaml
+---
+title: [文章标题]
+author: [作者]
+date: [日期]
+source: [原文 URL]
+tags:
+  - [领域标签]
+---
+```
 
 **翻译提示词模板（根据文章特征定制）：**
 ```
