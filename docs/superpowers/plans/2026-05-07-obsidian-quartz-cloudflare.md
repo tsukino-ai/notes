@@ -124,19 +124,52 @@ Expected: Commit successful.
 
 Use ReadFile to inspect `quartz.config.ts` and identify the `configuration` object.
 
-- [ ] **Step 2: 修改 baseUrl 和 ignorePatterns**
+- [ ] **Step 2: 修改 quartz.config.ts 完整配置**
 
-Replace the placeholder domain and add ignore pattern:
+基于官方默认配置，修改以下关键项：
 
+**configuration 对象：**
 ```typescript
-// In quartz.config.ts, inside configuration object:
-baseUrl: "your-domain.com",           // ← REPLACE with your actual custom domain
-ignorePatterns: [".obsidian", "private", "_backup"],
+configuration: {
+  pageTitle: "Tsukino Dev Notes",
+  pageTitleSuffix: "",
+  enableSPA: true,
+  enablePopovers: true,
+  analytics: {
+    provider: "plausible",              // 可后续改为 Cloudflare Web Analytics
+  },
+  locale: "zh-CN",                     // ← 中文站点
+  baseUrl: "notes.tsukino.dev",        // ← 自定义域名
+  ignorePatterns: [".obsidian", "private", "templates", "_backup"],
+  defaultDateType: "created",          // ← "created" 按创建时间；"modified" 按修改时间
+  // ... theme 配置保持不变或按需调整
+}
 ```
 
-Also ensure `pageTitle` is set appropriately:
+**plugins.transformers 数组：**
+在 `Plugin.Latex({ renderEngine: "katex" })` 之后添加：
 ```typescript
-pageTitle: "Tsukino Dev Notes",
+Plugin.HardLineBreaks(),                // ← 中文用户建议添加，与 Obsidian 预览行为一致
+```
+
+**plugins.emitters 数组：**
+```typescript
+emitters: [
+  // Plugin.AliasRedirects(),          // ← 如不需要旧链接跳转，注释掉可加速构建
+  Plugin.ComponentResources(),
+  Plugin.ContentPage(),
+  Plugin.FolderPage(),
+  Plugin.TagPage(),
+  Plugin.ContentIndex({
+    enableSiteMap: true,
+    enableRSS: true,
+  }),
+  Plugin.Assets(),
+  Plugin.Static(),
+  Plugin.Favicon(),
+  Plugin.NotFoundPage(),
+  // Plugin.CustomOgImages(),          // ← 如构建过慢，注释掉可显著加速（大型知识库建议）
+],
 ```
 
 - [ ] **Step 3: 验证修改后的配置**
@@ -173,7 +206,30 @@ mv "欢迎.md" content/
 mv AGENTS.md content/
 ```
 
-Expected: Root directory no longer has `欢迎.md` (or `AGENTS.md`); they exist under `content/`.
+- [ ] **Step 2: 创建 content/index.md 首页**
+
+Quartz 需要 `content/index.md` 作为站点首页。如果 `欢迎.md` 就是首页内容，可以直接：
+
+```bash
+cd content
+mv "欢迎.md" "index.md"
+```
+
+或者保留 `欢迎.md`，同时创建一个简短的 `index.md`：
+
+```markdown
+---
+title: Tsukino Dev Notes
+---
+
+欢迎来到我的知识库！
+
+- [[欢迎]]
+```
+
+Expected: `content/index.md` exists.
+
+- [ ] **Step 3: 配置 .gitignore**
 
 - [ ] **Step 2: 配置 .gitignore**
 
@@ -186,12 +242,20 @@ node_modules/
 # Quartz build output
 public/
 
-# Obsidian config (if you don't want it in git)
-# .obsidian/
-# Note: Keep .obsidian/ in git so Obsidian works across devices
-# but add exclusions for cache/plugins if needed:
+# Build cache & profiling
+.quartz-cache/
+prof/
+tsconfig.tsbuildinfo
+
+# System files
+.DS_Store
+
+# Obsidian auto-generated files that change frequently
 .obsidian/workspace.json
 .obsidian/graph.json
+
+# Private content
+private/
 ```
 
 > **Decision:** Keep `.obsidian/` in git (needed for LiveSync and cross-device use), but exclude auto-generated files that change frequently.
@@ -340,7 +404,7 @@ Expected:
 
 1. In Cloudflare Pages project, go to **Custom domains**
 2. Click **Set up a custom domain**
-3. Enter your domain (e.g. `notes.yourdomain.com`)
+3. Enter your domain: `notes.tsukino.dev`
 4. Click **Continue** and **Activate domain**
 
 Expected: Cloudflare validates the domain and shows "Active" status (may take a few minutes).
@@ -359,7 +423,7 @@ If not auto-added, create it manually.
 
 - [ ] **Step 3: 验证 HTTPS 和访问**
 
-Open `https://notes.yourdomain.com` (or your actual domain).
+Open `https://notes.tsukino.dev`.
 
 Expected:
 - Site loads successfully

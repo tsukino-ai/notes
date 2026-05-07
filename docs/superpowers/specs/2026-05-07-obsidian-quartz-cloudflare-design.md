@@ -123,7 +123,8 @@ tsukino_dev/                          ← Git 仓库根
 - **`.obsidian/` 保留在根目录**：Obsidian 打开仓库时仍能识别这是一个 Vault
 - **`content/` 为 Quartz 构建源**：只有放入 `content/` 的 Markdown 才会被发布
 - **`AGENTS.md` 的移动**：可移入 `content/` 作为知识库首页说明，或留在根目录不发布
-- **`.gitignore` 必须排除**：`.obsidian/`、`node_modules/`、`public/`（构建产物）
+- **`index.md` 首页**：Quartz 需要 `content/index.md` 作为站点首页。当前 `欢迎.md` 应作为首页内容，可重命名为 `index.md` 或在 `index.md` 中引用
+- **`.gitignore` 必须排除**：`.obsidian/`、`node_modules/`、`public/`（构建产物）、`.quartz-cache/`、`prof/`、`tsconfig.tsbuildinfo`、`.DS_Store`
 
 ---
 
@@ -135,13 +136,49 @@ tsukino_dev/                          ← Git 仓库根
 const config: QuartzConfig = {
   configuration: {
     pageTitle: "Tsukino Dev Notes",
-    baseUrl: "notes.yourdomain.com",    // ← 自定义域名
-    ignorePatterns: [".obsidian"],       // ← 确保 Obsidian 配置不被构建
+    baseUrl: "notes.tsukino.dev",        // ← 自定义域名
+    ignorePatterns: [".obsidian", "private", "templates"],
+    defaultDateType: "created",          // ← "created" 按创建时间排序；"modified" 按修改时间排序
     // ... 其他配置
   },
-  // ...
+  plugins: {
+    transformers: [
+      Plugin.FrontMatter(),
+      Plugin.CreatedModifiedDate({ priority: ["frontmatter", "git", "filesystem"] }),
+      Plugin.SyntaxHighlighting({ theme: { light: "github-light", dark: "github-dark" }, keepBackground: false }),
+      Plugin.ObsidianFlavoredMarkdown({ enableInHtmlEmbed: false }),
+      Plugin.GitHubFlavoredMarkdown(),
+      Plugin.TableOfContents(),
+      Plugin.CrawlLinks({ markdownLinkResolution: "shortest" }),
+      Plugin.Description(),
+      Plugin.Latex({ renderEngine: "katex" }),
+      Plugin.HardLineBreaks(),            // ← 中文/中文用户建议添加，与 Obsidian 预览行为一致
+    ],
+    filters: [Plugin.RemoveDrafts()],
+    emitters: [
+      // Plugin.AliasRedirects(),          // ← 注释掉可加速构建（如不需要旧链接跳转）
+      Plugin.ComponentResources(),
+      Plugin.ContentPage(),
+      Plugin.FolderPage(),
+      Plugin.TagPage(),
+      Plugin.ContentIndex({ enableSiteMap: true, enableRSS: true }),
+      Plugin.Assets(),
+      Plugin.Static(),
+      Plugin.Favicon(),
+      Plugin.NotFoundPage(),
+      // Plugin.CustomOgImages(),          // ← 注释掉可显著加速构建（大型知识库建议）
+    ],
+  },
 }
 ```
+
+### 5.1.1 图片/附件处理
+
+Obsidian 中图片通常使用 `![[image.png]]` 语法嵌入。Quartz 原生支持这种语法，但需确保：
+
+1. **图片路径**：建议将图片放在 `content/` 内的子目录，如 `content/attachments/` 或 `content/images/`
+2. **相对路径**：Obsidian 默认使用相对路径，Quartz 的 `Plugin.ObsidianFlavoredMarkdown` 会自动处理
+3. **大文件**：避免将过大的图片直接放入仓库，必要时使用图床或 Git LFS
 
 ### 5.2 Cloudflare Pages 构建配置
 
@@ -157,11 +194,11 @@ const config: QuartzConfig = {
 
 ### 5.3 自定义域名配置
 
-假设域名为 `notes.yourdomain.com`：
+域名为 `notes.tsukino.dev`：
 
 1. **Cloudflare Pages 项目设置**
    - 进入项目 → **Custom domains**
-   - 添加域名：`notes.yourdomain.com`
+   - 添加域名：`notes.tsukino.dev`
    - Cloudflare 自动验证并生成 SSL 证书
 
 2. **Cloudflare DNS 记录**
@@ -195,6 +232,7 @@ const config: QuartzConfig = {
 
 2. **迁移现有笔记**
    - 将 `.md` 文件移入 `content/`
+   - 将 `欢迎.md` 作为首页内容，可选择重命名为 `index.md`
    - 调整 `quartz.config.ts` 中的 `baseUrl`
 
 3. **推送到 GitHub**
@@ -223,6 +261,10 @@ const config: QuartzConfig = {
 | 草稿/私有笔记 | `private/`（可创建） | ❌ 否 | `ignorePatterns` 排除 |
 | 构建产物 | `public/` | ❌ 否 | `.gitignore` 排除 |
 | 依赖 | `node_modules/` | ❌ 否 | `.gitignore` 排除 |
+| 构建缓存 | `.quartz-cache/` | ❌ 否 | `.gitignore` 排除 |
+| 性能分析 | `prof/` | ❌ 否 | `.gitignore` 排除 |
+| TypeScript 缓存 | `tsconfig.tsbuildinfo` | ❌ 否 | `.gitignore` 排除 |
+| 系统文件 | `.DS_Store` | ❌ 否 | `.gitignore` 排除 |
 
 ### 7.2 公开内容范围
 
