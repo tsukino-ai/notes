@@ -60,6 +60,11 @@ Analyze the URL:
 
 在展示摘要的同时，基于原文自动生成一份**基础笔记草稿**，保存到 `content/<tier>/<YYYY-MM-DD>-<slug>.md`。
 
+**重要检查（保存前）：**
+- 搜索知识库是否已有同名或同主题笔记（`Glob` 检查 `content/**/<pattern>*`）
+- 如已有笔记，**不要覆盖**，改用新文件名（如加 `-lilian-weng` 后缀）或跳过创建
+- 笔记内容应比已有笔记补充新的视角，而非简单重复
+
 这份草稿包含：
 - 核心概念整理（AI 的初步理解）
 - 关键洞察（原文提炼）
@@ -72,6 +77,20 @@ Analyze the URL:
 - 最终确认的知识连接
 
 **告知用户：** "已保存一份基础笔记到 `content/...`，继续对话会让它更丰富。"
+
+**C. 保底 Commit（关键！）**
+
+Phase 3 完成后立即 commit，确保 draft 进入 git 历史：
+
+```bash
+git status                    # 确认修改范围
+git add _refs/articles/...    # 只添加本次新增/修改的文件
+git add content/...           # 不要 git add .，避免混入 .obsidian/workspace.json 等自动生成的配置
+git commit -m "learn(<type>,draft): <title>"
+git push origin main
+```
+
+> **为什么 Phase 3 就要 commit？** 这是"保底机制"的关键一环。如果用户此时退出、对话未继续，至少 draft 笔记已经安全地保存在 git 历史中。等到 Phase 5 再 commit 意味着中间所有进展只存在于本地工作目录，有丢失风险。
 
 ### Phase 4: Guide Learning
 
@@ -115,17 +134,29 @@ Analyze the URL:
 3. 使用对应模板格式化：
    - Article: `references/article-note-template.md`
    - Repository: `references/repo-note-template.md`
-4. 保存覆盖原 draft
+4. 保存覆盖原 draft（或追加为新版本，保留 draft 历史）
 
-**如果用户中途退出**（没有触发 Phase 5）：Phase 3 的 draft 已包含基础内容，不会空手而归。
+**如果用户中途退出**（没有触发 Phase 5）：Phase 3 的 draft 已包含基础内容，且已通过保底 commit 保存到 git，不会空手而归。
 
-### Phase 6: Commit and Push
+### Phase 6: Final Commit and Push
+
+Phase 5 完成后，执行最终 commit：
 
 ```bash
 git add content/ _refs/
 git commit -m "learn(<type>): <title>"
 git push origin main
 ```
+
+**Commit 规范：**
+- **Phase 3 保底 commit**：`learn(article,draft): <title>` 或 `learn(repo,draft): <repo-name>`
+- **Phase 5 最终 commit**：`learn(article): <title>` 或 `learn(repo): <repo-name>`
+- 如果只有一篇文章/仓库，标题可直接用文章名；如果多篇文章，标题概括主题
+
+**注意事项：**
+- 不要 commit `.obsidian/workspace.json`、`.quartz-cache/` 等自动生成文件
+- 不要覆盖用户已有的笔记（Phase 3 已做检查）
+- 如果 push 失败（如远程有更新），先 `git pull --rebase` 再 push
 
 ## Note on Mermaid
 
