@@ -8,3 +8,6 @@ tsconfig.tsbuildinfo
 private/
 .replit
 replit.nix
+
+# Temporary directories for skill processing
+.temp/
