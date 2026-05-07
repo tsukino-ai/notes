@@ -31,8 +31,31 @@ Analyze the URL:
 - 中文部分保持原样，如 `content/10-LLM基础/`
 
 **Article path:**
-1. FetchURL to read content
-2. Save to `_refs/articles/<YYYY-MM-DD>-<slug>.md`（`<slug>` 全小写，kebab-case）
+1. FetchURL 获取原文
+2. Save 原文到 `_refs/articles/<YYYY-MM-DD>-<slug>.md`（`<slug>` 全小写，kebab-case）
+3. **翻译（如果是英文原文，用户未明确拒绝时执行）**
+   a. **分析文章特征**：类型（技术博客/论文/文档）、领域（ML/前端/后端/...）、受众
+   b. **生成专门翻译提示词**：包含术语保留列表、风格要求、格式要求、输出格式
+   c. **启动翻译 subagent**：传入原文 + 翻译提示词，获取完整译文
+   d. **保存译文**：`_refs/articles/translations/<slug>.zh.md`
+   e. **在 content/ 笔记中引用**：在笔记头部添加 `> 译文：_refs/articles/translations/<slug>.zh.md`
+
+**翻译提示词模板（根据文章特征定制）：**
+```
+你是一位[领域]技术文档翻译专家。请将以下英文[类型]翻译成中文。
+
+## 文章背景
+[一句话描述文章背景和受众]
+
+## 翻译要求
+1. 术语处理：以下术语首次出现时保留英文并括号注明中文，后续可直接用中文...
+2. 保留不翻译：数学公式、论文引用、代码标记、人名、书名
+3. 风格要求：学术准确但通俗易懂 / 简洁清晰 / 活泼生动（根据文章类型选择）
+4. 输出格式：保留原始 markdown 标题层级，输出纯中文译文
+
+## 原文
+[完整原文]
+```
 
 **Repository path:**
 1. `git clone --depth 1 <url> .temp/repos/<repo-name>/`（`<repo-name>` 全小写）
