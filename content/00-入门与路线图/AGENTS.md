@@ -90,6 +90,74 @@
 如果答案来自本地笔记，请尽量引用具体文件路径，例如：
 
 ```text
-10-Concepts/AI/RAG.md
-20-Codebase/LangGraph/Overview.md
-30-Projects/AI-Coding-Platform/需求分析.md
+10-LLM基础/Transformer.md
+30-Agent工程/LangGraph核心概念.md
+```
+
+---
+
+## 发布工作流
+
+本知识库使用 **Obsidian + Quartz + Cloudflare Pages** 构建和部署。
+
+### 技术栈
+
+| 组件 | 用途 |
+|---|---|
+| Obsidian | 本地笔记编辑 |
+| Quartz 4 | 静态站点生成（Markdown → HTML）|
+| GitHub | 源码托管 |
+| Cloudflare Pages | 自动构建 + CDN 部署 |
+| 自定义域名 | `notes.tsukino.dev` |
+
+### 日常发布流程
+
+在 Obsidian 中编辑笔记后，执行：
+
+```bash
+git add content/
+git commit -m "content: xxx"
+git push origin main
+```
+
+Cloudflare Pages 会在 1-2 分钟内自动构建并部署到 `notes.tsukino.dev`。
+
+### 目录结构规范
+
+```
+content/
+├── index.md                    ← 首页
+├── 00-入门与路线图/
+├── 10-LLM基础/
+├── 20-RAG工程/
+├── 30-Agent工程/
+├── 40-AI编码与源码/
+├── 50-后端/
+├── 60-前端/
+├── 70-DevOps/
+└── 99-工具与参考/
+```
+
+- 每层必须有 `index.md` 作为入口地图
+- 笔记使用 `kebab-case` 或中文命名
+- 图片建议放在 `content/attachments/` 或对应目录下
+
+### 本地预览
+
+```bash
+npx quartz build --serve
+# 打开 http://localhost:8080
+```
+
+### 本地构建验证
+
+```bash
+npx quartz build
+```
+
+### 重要配置
+
+- `quartz.config.ts`: `baseUrl: "notes.tsukino.dev"`
+- `quartz.config.ts`: `ignorePatterns: [".obsidian", "private", "templates", "_backup"]`
+- Cloudflare Pages 构建命令：`git fetch --unshallow && npx quartz build`
+- 构建输出目录：`public`
