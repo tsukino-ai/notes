@@ -1,5 +1,4 @@
 ---
-draft: true
 date: 2026-05-08
 tags:
   - spring-ai-alibaba
