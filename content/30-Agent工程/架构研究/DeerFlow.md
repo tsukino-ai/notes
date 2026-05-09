@@ -261,11 +261,11 @@ graph LR
 
 ## 与已有知识的关联
 
-- **[[LangGraph-Router-Specialist实战]]** —— DeerFlow 的 Subagent 系统是 Router + Specialist 的另一种实现范式（工具委派 vs 条件边路由）
-- **[[LangGraph核心概念]]** —— DeerFlow 的 Lead Agent 底层就是 LangGraph 的 StateGraph + Pregel 引擎
+- **[[Router-Specialist实战]]** —— DeerFlow 的 Subagent 系统是 Router + Specialist 的另一种实现范式（工具委派 vs 条件边路由）
+- **[[核心概念]]** —— DeerFlow 的 Lead Agent 底层就是 LangGraph 的 StateGraph + Pregel 引擎
 - **[[MCP协议详解]]** —— DeerFlow 内置 MCP 支持（stdio/SSE/HTTP），Skills 和 MCP Tools 是互补的扩展机制
-- **[[LLM-Powered-Autonomous-Agents]]** —— DeerFlow 是 Planning + Memory + Tool Use 三者的工程化落地，尤其是 MRKL 的「路由器+专家模块」思想的现代实现
-- **[[2026-05-08-durable-execution]]** —— DeerFlow 的 ThreadData + Checkpointer + Sandbox 是 durable execution 在应用层的完整实践
+- **[[Autonomous-Agents]]** —— DeerFlow 是 Planning + Memory + Tool Use 三者的工程化落地，尤其是 MRKL 的「路由器+专家模块」思想的现代实现
+- **[[Durable-Execution]]** —— DeerFlow 的 ThreadData + Checkpointer + Sandbox 是 durable execution 在应用层的完整实践
 
 ---
 

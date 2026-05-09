@@ -436,10 +436,10 @@ def route_with_fallback(state: State):
 
 ## 与已有笔记的关联
 
-- **[[LangGraph核心概念]]** —— `add_conditional_edges`、`Command(goto=...)` 是 Router 的底层机制
+- **[[核心概念]]** —— `add_conditional_edges`、`Command(goto=...)` 是 Router 的底层机制
 - **[[LangGraph快速上手]]** —— `should_continue` 是最简单的条件路由实例
-- **[[LLM-Powered-Autonomous-Agents]]** —— MRKL 的「LLM 路由到专家模块」是本模式的理论源头
-- **[[2026-05-08-durable-execution]]** —— 多 Agent 系统的持久化对维护对话状态至关重要
+- **[[Autonomous-Agents]]** —— MRKL 的「LLM 路由到专家模块」是本模式的理论源头
+- **[[Durable-Execution]]** —— 多 Agent 系统的持久化对维护对话状态至关重要
 
 ---
 

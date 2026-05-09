@@ -93,7 +93,7 @@ graph LR
 
 - [[Agent设计模式]] —— 本文是 ReAct、Plan-and-Execute 等模式的原始理论基础之一
 - [[Tool-Calling模式]] —— MRKL、Toolformer、API-Bank 为现代工具调用提供了早期范式
-- [[LangGraph核心概念]] —— LangGraph 的状态图本质上是对本文 Planning + Memory 组件的工程化封装
+- [[核心概念]] —— LangGraph 的状态图本质上是对本文 Planning + Memory 组件的工程化封装
 - [[MCP协议详解]] —— MCP 可视为 MRKL "专家模块" 思想的标准化协议层
 
 ## 待深入研究
