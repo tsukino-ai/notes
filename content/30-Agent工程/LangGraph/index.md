@@ -11,3 +11,4 @@ LangGraph 是 LangChain 官方推出的 **Python 状态图框架**，用于构�
 - [[核心概念]] —— StateGraph、Node、Edge、Reducer、Command、Checkpoint 等核心抽象
 - [[Router-Specialist实战]] —— 函数路由 → LLM 结构化路由 → Swarm 自治三种模式实战
 - [[Durable-Execution]] —— 持久化执行：Thread、Checkpoint、Memory Store、Checkpointer 实现
+- [[Deep-Agents]] —— LangChain 官方 Agent Harness：规划 + 文件系统 + 子 Agent + 权限 + 沙箱
