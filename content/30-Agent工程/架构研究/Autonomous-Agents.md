@@ -95,6 +95,7 @@ graph LR
 - [[Tool-Calling模式]] —— MRKL、Toolformer、API-Bank 为现代工具调用提供了早期范式
 - [[核心概念]] —— LangGraph 的状态图本质上是对本文 Planning + Memory 组件的工程化封装
 - [[MCP协议详解]] —— MCP 可视为 MRKL "专家模块" 思想的标准化协议层
+- [[agent-memory-design-references]] —— Letta 系列文章、MemGPT、CoALA 等对本文 Memory 章节的补充与更新
 
 ## 待深入研究
 
