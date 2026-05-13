@@ -12,6 +12,10 @@ title: Agent 工程
 - [[Java-AI-生态/index|Java AI 生态]] —— Spring AI / LangChain4j 全栈补充
 - [[架构研究/index|架构研究]] —— 跨框架参考项目与论文
 
+## 课程与框架参考
+
+- [[agents-course-framework-guide|Agent 框架对比与学习路径]] —— HF Agents Course 三框架（smolagents / LlamaIndex / LangGraph）对比
+
 ## 待补充主题
 
 - [[Agent设计模式]] —— ReAct、Plan-and-Execute 等模式
