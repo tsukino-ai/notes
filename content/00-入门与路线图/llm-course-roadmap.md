@@ -16,7 +16,8 @@ tags:
 # LLM 课程全景路线图 — mlabonne/llm-course
 
 > 本地存档：`_refs/repos/llm-course/`
-> 原始仓库：https://github.com/mlabonne/llm-course（50k+ ⭐）
+> 原始仓库：https://github.com/mlabonne/llm-course
+> Star：50k+ ⭐
 > 作者：Maxime Labonne（Meta 研究科学家）
 
 这是一份面向 **LLM Scientist + LLM Engineer** 双轨发展的完整课程索引。本笔记不做全文搬运，只提炼知识结构、关键概念跳转点和与本地知识库的衔接关系。
