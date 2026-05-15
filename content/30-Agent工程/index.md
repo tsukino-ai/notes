@@ -14,7 +14,7 @@ title: Agent 工程
 
 ## 课程与框架参考
 
-- [[agents-course-framework-guide|Agent 框架对比与学习路径]] —— HF Agents Course 三框架（smolagents / LlamaIndex / LangGraph）对比
+- [[架构研究/agents-course-framework-guide|Agent 框架对比与学习路径]] —— HF Agents Course 三框架（smolagents / LlamaIndex / LangGraph）对比
 
 ## 待补充主题
 

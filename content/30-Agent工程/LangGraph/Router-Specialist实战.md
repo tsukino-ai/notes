@@ -10,8 +10,8 @@ tags:
   - design-pattern
 ---
 
-> [📖 中英段落对照：Graph API](../99-工具与参考/ref-articles/langgraph-graph-api-bilingual.md)
-> [📖 中英段落对照：Workflows & Agents](../99-工具与参考/ref-articles/langgraph-workflows-agents-bilingual.md)
+> [📖 中英段落对照：Graph API](ref-articles/langgraph-graph-api-bilingual.md)
+> [📖 中英段落对照：Workflows & Agents](ref-articles/langgraph-workflows-agents-bilingual.md)
 
 ## 什么是 Router + Specialist
 
