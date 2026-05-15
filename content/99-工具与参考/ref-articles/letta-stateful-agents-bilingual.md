@@ -1,5 +1,5 @@
 ---
-title: Stateful Agents: The Missing Link in LLM Intelligence
+title: "Stateful Agents: The Missing Link in LLM Intelligence"
 author: Letta
 date: 2025-02-06
 source: https://www.letta.com/blog/stateful-agents

@@ -1,5 +1,5 @@
 ---
-title: Memory Blocks: The Key to Agentic Context Management
+title: "Memory Blocks: The Key to Agentic Context Management"
 author: Letta
 date: 2025-05-14
 source: https://www.letta.com/blog/memory-blocks
