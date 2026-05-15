@@ -12,10 +12,11 @@ tags:
 
 # OpenSpec 源码解析：AI-Native 的 Spec-Driven Development 框架
 
-> 源码仓库：`Fission-AI/OpenSpec`
-> 版本：v1.3.1
-> 协议：MIT
-> npm：`@fission-ai/openspec`
+> **源码仓库：** https://github.com/Fission-AI/OpenSpec
+> **版本：** v1.3.1
+> **协议：** MIT
+> **npm：** `@fission-ai/openspec`
+> **Stars：** 48,101 | **Forks：** 3,375
 
 ## 一、项目定位
 

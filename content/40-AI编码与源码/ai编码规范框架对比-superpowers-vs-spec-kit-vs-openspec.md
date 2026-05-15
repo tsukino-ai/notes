@@ -13,9 +13,9 @@ tags:
 # AI 编码规范框架深度对比：Superpowers vs Spec-Kit vs OpenSpec
 
 > 本文对比分析三个当前最流行的 AI-Native 软件开发规范框架：
-> - **Superpowers** (`obra/superpowers`) — 方法论 Skills 框架
-> - **Spec-Kit** (`github/spec-kit`) — GitHub 官方的 Spec-Driven CLI 工具包
-> - **OpenSpec** (`Fission-AI/OpenSpec`) — AI-Native 的 Spec-Driven 框架
+> - **Superpowers** ([`obra/superpowers`](https://github.com/obra/superpowers)) — 方法论 Skills 框架
+> - **Spec-Kit** ([`github/spec-kit`](https://github.com/github/spec-kit)) — GitHub 官方的 Spec-Driven CLI 工具包
+> - **OpenSpec** ([`Fission-AI/OpenSpec`](https://github.com/Fission-AI/OpenSpec)) — AI-Native 的 Spec-Driven 框架
 
 ## 一、基本信息速览
 
@@ -27,7 +27,7 @@ tags:
 | **形态** | Skills 库 + 方法论 | CLI 工具 + 框架 | npm CLI + 框架 |
 | **版本** | v5.1.0 | 持续迭代 | v1.3.1 |
 | **支持平台** | 8+ | 30+ | 30+ |
-| **Star 数** | ~3k+ | ~2k+ | ~1k+ |
+| **Stars** | 191,361 | 99,575 | 48,101 |
 | **核心哲学** | 软件工程最佳实践自动化 | 规格说明可执行化 | 流动、迭代、简单 |
 
 ## 二、定位与哲学对比

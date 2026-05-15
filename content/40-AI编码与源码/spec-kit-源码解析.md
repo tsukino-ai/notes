@@ -12,9 +12,10 @@ tags:
 
 # Spec-Kit 源码解析：GitHub 官方的 Spec-Driven Development 工具包
 
-> 源码仓库：`github/spec-kit`
-> 协议：MIT
-> 定位：开源 Spec-Driven Development 工具包
+> **源码仓库：** https://github.com/github/spec-kit
+> **协议：** MIT
+> **定位：** 开源 Spec-Driven Development 工具包
+> **Stars：** 99,575 | **Forks：** 8,674
 
 ## 一、项目定位
 

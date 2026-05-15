@@ -12,9 +12,10 @@ tags:
 
 # Superpowers 源码解析：AI 编码 Agent 的软件开发方法论
 
-> 源码仓库：`obra/superpowers`
-> 版本：v5.1.0
-> 协议：MIT
+> **源码仓库：** https://github.com/obra/superpowers
+> **版本：** v5.1.0
+> **协议：** MIT
+> **Stars：** 191,361 | **Forks：** 17,019
 
 ## 一、项目定位
 
