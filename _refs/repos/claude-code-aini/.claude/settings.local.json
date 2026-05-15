@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ls:*)",
+      "Read(//Users/ainiaini/Desktop/**)",
+      "Read(//Users/ainiaini/**)",
+      "Bash(open \"https://www.aicody.cn\")",
+      "Bash(find /Users/ainiaini/Downloads/claude-code-haha-main/src -type d -iname *command* -o -type d -iname *slash*)",
+      "Bash(find /Users/ainiaini/Downloads/claude-code-haha-main/src -maxdepth 3 -path *command*)",
+      "Bash(for dir:*)",
+      "Bash(do echo:*)",
+      "Read(//Users/ainiaini/Downloads/claude-code-haha-main/**)",
+      "Bash(done)"
+    ]
+  }
+}
