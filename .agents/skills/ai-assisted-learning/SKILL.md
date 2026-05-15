@@ -100,6 +100,12 @@ tags:
 2. `rm -rf .temp/repos/<repo-name>/.git/`
 3. `mv .temp/repos/<repo-name>/ _refs/repos/<repo-name>/`
 
+**Repository 元数据获取（强制）：**
+- 通过 GitHub API (`https://api.github.com/repos/{owner}/{repo}`) 查询并记录真实的 **Stars、Forks、Open Issues** 数量
+- 读取 `package.json` / `Cargo.toml` / `pyproject.toml` 确认版本号
+- **严禁编造任何量化数据**（Stars、下载量、版本号、用户数等）
+- 如果 API 查询失败，在笔记中标注 "数据待补充"，绝不留空或猜测
+
 ### Phase 3: Summarize & Generate Draft Note
 
 **两个并行动作：**
@@ -130,6 +136,8 @@ tags:
 - 搜索知识库是否已有同名或同主题笔记（`Glob` 检查 `content/**/<pattern>*`）
 - 如已有笔记，**不要覆盖**，改用新文件名（如加 `-lilian-weng` 后缀）或跳过创建
 - 笔记内容应比已有笔记补充新的视角，而非简单重复
+- **原始来源必须显式可点击**：笔记正文中必须包含完整的原始 URL（如 `https://github.com/obra/superpowers`），不能只写在 frontmatter 或只用仓库名缩写
+- **所有量化数据必须可验证**：Stars、Forks、版本号、下载量等必须来自实际 API 查询或源码读取，严禁编造或估算
 
 这份草稿包含：
 - 核心概念整理（AI 的初步理解）
