@@ -10,9 +10,12 @@ tags:
 ---
 
 > **论文**：Agent Harness Engineering: A Survey
-> **机构**：CMU、耶鲁大学、弗吉尼亚理工大学、Amazon 等
+> **作者**：Junjie Li, Xi Xiao, Yunbei Zhang, Chen Liu, Lin Zhao, Xiaoying Liao, Yingrui Ji, Janet Wang, Jianyang Gu, Yingqiang Ge, Weijie Xu, Xi Fang, Xiang Xu, Tianchen Zhao, Youngeun Kim, Tianyang Wang, Jihun Hamm, Smita Krishnaswamy, Jun Huan, Chandan K Reddy
+> **机构**：CMU, Yale, JHU, NEU, Tulane, UAB, OSU, Virginia Tech, Amazon
+> **原文**：[OpenReview PDF](https://openreview.net/pdf/f358711a95aaaf61fdeffd4ef3fc60fba9b8da57.pdf)｜[项目主页](https://picrew.github.io/LLM-Harness/)
+> **期刊**：Under review as submission to TMLR (Transactions on Machine Learning Research)
 > **解读来源**：[微信公众号 - AI修猫Prompt](https://mp.weixin.qq.com/s?__biz=Mzg4MzYxODkzMg==&mid=2247508338&idx=1&sn=bd9dd854c1752d68a6706b966058e707)
-> **状态**：基于中文解读整理，原文尚未找到公开链接
+> **状态**：基于原文 PDF + 中文解读整理
 
 ---
 
@@ -127,13 +130,18 @@ graph TD
 
 | 类别 | 代表系统 | 特点 |
 |---|---|---|
-| 通用托管沙盒 | Daytona、E2B | 基于 MicroVM 或容器，API 接口，支持任意负载 |
-| 计算机使用基础设施 | Anthropic Computer Use | 完整图形桌面环境，模拟鼠标/键盘操作 |
-| 代码专用沙盒 | OpenAI Code Interpreter | 优化代码生成和数据分析的启动速度和并发性 |
-| 框架集成运行时 | OpenHands | 沙盒与 Agent 框架捆绑，开箱即用 |
-| 浏览器评估环境 | WebArena | 隔离的 Web 环境，用于执行和基准测试 |
-| OS 级权限沙盒 | bubblewrap | 通过 OS 原语限制文件和网络访问，非常轻量 |
-| 沙盒抽象层 | — | 解耦底层沙盒技术，Agent 代码可无缝切换执行环境 |
+| **通用托管沙盒** | Daytona、E2B、Modal、Northflank、OpenSandbox、Docker Sandboxes | 基于 MicroVM（Firecracker）或 gVisor，API 接口，支持任意 OCI 镜像；Daytona 冷启动 <90ms |
+| **计算机使用基础设施** | Anthropic Computer Use、CUA、OSWorld | 完整图形桌面环境（Xvfb/VM），模拟鼠标/键盘/屏幕观察；动作空间大但可靠性依赖视觉定位 |
+| **代码专用沙盒** | Judge0、OpenAI Code Interpreter、sandboxed.sh、langchain-sandbox | 优化代码生成和数据分析的启动速度；趋势从容器转向 WebAssembly（Pyodide/Deno）以换取微秒级实例化和确定性执行 |
+| **框架集成运行时** | OpenHands、agent-infra sandbox、smolagents executors | 与 Agent 框架捆绑（ReAct 循环、工具注册表、提示词约定）；开箱即用但镜像大、启动慢、与框架紧耦合 |
+| **浏览器评估环境** | WebArena、VisualWebArena、BrowserGym、WorkArena | 兼具沙盒和评测双重角色；Playwright 交互；是多模态提示注入和红队测试的天然载体 |
+| **OS 级权限沙盒** | Anthropic sandbox-runtime、Claude Code sandboxing、IsolateGPT | 通过 bubblewrap（Linux）/ Seatbelt（macOS）/ seccomp-bpf 限制文件和网络访问；**Anthropic 报告 Claude Code 引入沙盒后权限提示减少 84%** |
+| **沙盒抽象层** | SWE-ReX、smolagents executors、K8s Agent Sandbox | 统一多后端（Docker/AWS Fargate/Modal/Daytona）的单一 API；使 Harness 与具体沙盒供应商解耦 |
+
+> **三个跨领域趋势**（原文 §3.2 Synthesis）：
+> 1. **隔离强度两极分化**：通用沙盒从共享内核容器转向专用内核 MicroVM；OS 级权限沙盒则完全放弃独立环境，改为缩小宿主视图。中间地带的纯 Docker 正被两端挤压。
+> 2. **评测鲁棒性成为一级关切**：SandboxEscapeBench 报告前沿模型对 Docker 容器的逃逸成功率达 **15%-35%**。
+> 3. **基础设施隔离与语义隔离互补**：沙盒约束动作执行后的爆炸半径；CaMeL、Progent 等则在工具调用层约束哪些动作被允许执行。
 
 > **知识库关联**：OpenHands 的源码分析可参考 [[AI-Coding-CLI工具/index]]
 
@@ -246,6 +254,10 @@ graph LR
 处理瞬时失败：
 - **Anthropic Managed Agents**：将"大脑"（LLM）与"双手"（沙盒）解耦，沙盒崩溃可立即重新拉起而不丢失进度
 
+#### 可观测性与评估的结构性差距
+
+LangChain 2026 年调研报告显示：**89%** 的团队使用可观测性工具，但只有 **52.4%** 运行离线评估。这意味着团队能看到 Agent 做了什么，却没有系统性地判断行为是否正确。未来工作需要将异常生产轨迹转化为回归用例，直接在 span 上计算轨迹指标，并将诊断信号反馈给提示词、工具、上下文和编排的变更。
+
 ### 3.6 V — Verification & Evaluation（验证与评测）
 
 评估不再是简单地看"最终答案对不对"，而是转变为 **"任务到反馈"的五阶段生命周期**：
@@ -281,36 +293,50 @@ graph LR
 
 #### 生命周期钩子（Lifecycle Hooks）
 
-在四个关键点拦截：
+Governance 在工具使用周期的四个关键点位拦截（原文 Figure 14）：
 
 ```mermaid
 graph LR
-    A[用户输入] -->|钩子1| B[输入LLM前]
-    B --> C[LLM生成动作]
-    C -->|钩子2| D[执行工具前]
-    D --> E[工具执行]
-    E -->|钩子3| F[工具返回数据后]
-    F --> G[回写上下文]
-    G -->|钩子4| H[需人类审批的关键动作]
+    A[用户输入] -->|H1<br/>Input Guardrails| B[LLM]
+    B -->|H2<br/>Output Guardrails| C[工具执行]
+    C -->|H3<br/>Information Flow Control| D[回写上下文]
+    D -->|H4<br/>Human-in-the-Loop| E[最终输出]
 ```
 
-| 钩子位置 | 防范风险 |
-|---|---|
-| 输入 LLM 前 | 提示词注入（Prompt Injection） |
-| 执行工具前 | 越权操作 |
-| 工具返回数据后 | 信息流污染、污点追踪 |
-| 人机交互审批 | 高风险决策 |
+| 钩子 | 阶段 | 代表系统 | 防范风险 |
+|---|---|---|---|
+| **H1** | 输入 LLM 前 | PromptShield、DataSentinel | 提示词注入（Prompt Injection） |
+| **H2** | 执行工具前 | ShieldAgent、ControlValve | 越权操作、控制流劫持 |
+| **H3** | 工具返回后 | CaMeL（基于能力的信息流控制） | 信息流污染、污点追踪 |
+| **H4** | 人机交互审批 | Codex、Gemini CLI、Cursor、OpenHands | 高风险决策的显式用户批准 |
+
+> **关键洞察**：Felt 等人的研究表明，仅 **17%** 的 Android 用户会在应用安装时关注权限对话框，仅 **3%** 能正确回答权限相关问题。Agent 的审批对话框可能面临类似的"习惯性批准"风险。
 
 #### 声明式宪法（Declarative Constitutions）
 
-将安全规则从代码中剥离，用 YAML 格式描述：
-- 合规团队可以直接修改 Agent 的行为边界
-- 可设置预算限制、操作白名单等
-- 无需修改代码即可调整安全策略
+将安全规则从代码中剥离为可独立审计、版本控制的配置：
+
+**训练时宪法（Training-time）**：以 Anthropic 的 Constitutional AI 为代表，四层优先级层级：安全（保留人类监督）→ 伦理（诚实、避免伤害）→ 合规（公司准则）→ 有用性（用户请求）。硬约束（如绝对禁止 CBRN 协助）与软约束（操作者可调整范围内）分离。
+
+**部署时宪法（Deployment-time）**：以 AutoHarness 的 YAML 配置为代表，可声明管道模式（core/standard/enhanced）、风险分类模式、允许/拒绝的工具模式、Token 预算限制、审计日志目的地。非开发者（安全团队、合规人员）可直接审阅和修改策略。
+
+> **关键区别**：训练时宪法修改成本高、难以审计；部署时 YAML 可直接 diff、版本化、无需重新训练模型。
 
 #### 审计
 
-记录**不可篡改的结构化日志**，供事后溯源，防范"隐蔽的数据泄露"等长期攻击。
+记录**不可篡改的结构化日志**，供事后溯源。一个可重放的审计记录至少需要：trace 标识符、主体身份、工具调用、策略决策及版本、执行结果、资源成本、以及覆盖相关输入输出的完整性哈希。
+
+**异常检测的两个粒度**：
+- **单动作检测**（Per-action）：轻量、易审计，但无法识别分布在多个无害动作中的攻击（如慢速数据渗出）
+- **轨迹级检测**（Trajectory-level）：AgentAuditor、SentinelAgent 等捕获多步攻击，但延迟更高、解释性更差
+
+#### 供应链安全与工具加固
+
+**MCP 安全**：MCP 作为工具接口标准，初始规范缺乏原生安全原语。Trail of Bits 研究表明 MCP 服务器可在用户调用工具前通过"投毒"工具描述影响 LLM 行为。ETDI 扩展 MCP 引入密码学签名和版本化工具定义，防止 rug-pull 攻击。
+
+**包名幻觉攻击（Slopsquatting）**：Spracklen 等人分析了 57.6 万个代码样本，发现开源模型以 **21.7%** 的比率幻觉出不存在的包名。攻击者可注册这些幻觉包名并注入恶意代码。
+
+**模型加固**：Wallace 等人提出的指令层级（Instruction Hierarchy）训练模型优先遵循特权指令（系统提示词）而非低特权指令（用户消息、工具输出）。SecAlign 将相同防御目标形式化为提示词注入输入上的偏好优化。
 
 ---
 
@@ -424,7 +450,7 @@ graph LR
 
 ## 八、待深入研究
 
-- [ ] 找到并阅读原论文《Agent Harness Engineering: A Survey》的英文全文
+- [x] 找到并阅读原论文《Agent Harness Engineering: A Survey》的英文全文
 - [ ] 调研 MCP 协议的具体实现（客户端-服务器架构、工具发现机制）
 - [ ] 对比 MemGPT、Mem0、Honcho 三种长期记忆方案的技术差异
 - [ ] 研究 FrugalGPT 的成本优化策略和路由逻辑
@@ -440,4 +466,12 @@ graph LR
 ## 参考
 
 1. [中文解读原文 - AI修猫Prompt](https://mp.weixin.qq.com/s?__biz=Mzg4MzYxODkzMg==&mid=2247508338&idx=1&sn=bd9dd854c1752d68a6706b966058e707)
-2. 论文：Agent Harness Engineering: A Survey（CMU、耶鲁、弗吉尼亚理工、Amazon 等）
+2. **原文论文**：
+   - [OpenReview PDF](https://openreview.net/pdf/f358711a95aaaf61fdeffd4ef3fc60fba9b8da57.pdf)
+   - [项目主页 / Awesome-Agent-Harness 目录](https://picrew.github.io/LLM-Harness/)
+3. **关键引用文献**：
+   - Bölük (2026a). *I improved 15 LLMs at coding in one afternoon. Only the harness changed.* — binding-constraint thesis 原始证据
+   - Trivedy (2026). Terminal-Bench 2.0 Harness-only 改进报告
+   - Lee et al. (2026). Meta-Harness: 自动化 Harness 优化
+   - Anthropic (2025b). Beyond permission prompts: Making Claude Code more secure and autonomous — 沙盒减少 84% 权限提示
+   - LangChain (2026a). Agent 可观测性与评估调研报告（89%/52.4% 数据）
