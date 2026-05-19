@@ -469,6 +469,7 @@ graph LR
 2. **原文论文**：
    - [OpenReview PDF](https://openreview.net/pdf/f358711a95aaaf61fdeffd4ef3fc60fba9b8da57.pdf)
    - [项目主页 / Awesome-Agent-Harness 目录](https://picrew.github.io/LLM-Harness/)
+   - [📖 中英段落对照阅读（精选章节）](../99-工具与参考/ref-articles/agent-harness-engineering-survey-bilingual.md)
 3. **关键引用文献**：
    - Bölük (2026a). *I improved 15 LLMs at coding in one afternoon. Only the harness changed.* — binding-constraint thesis 原始证据
    - Trivedy (2026). Terminal-Bench 2.0 Harness-only 改进报告
