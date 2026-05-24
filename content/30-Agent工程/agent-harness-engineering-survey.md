@@ -13,6 +13,7 @@ tags:
 > **作者**：Junjie Li, Xi Xiao, Yunbei Zhang, Chen Liu, Lin Zhao, Xiaoying Liao, Yingrui Ji, Janet Wang, Jianyang Gu, Yingqiang Ge, Weijie Xu, Xi Fang, Xiang Xu, Tianchen Zhao, Youngeun Kim, Tianyang Wang, Jihun Hamm, Smita Krishnaswamy, Jun Huan, Chandan K Reddy
 > **机构**：CMU, Yale, JHU, NEU, Tulane, UAB, OSU, Virginia Tech, Amazon
 > **原文**：[OpenReview PDF](https://openreview.net/pdf/f358711a95aaaf61fdeffd4ef3fc60fba9b8da57.pdf)｜[项目主页](https://picrew.github.io/LLM-Harness/)
+> **中英对照**：[[../99-工具与参考/ref-articles/agent-harness-engineering-survey-bilingual|Agent Harness Engineering 中英段落对照]]
 > **期刊**：Under review as submission to TMLR (Transactions on Machine Learning Research)
 > **解读来源**：[微信公众号 - AI修猫Prompt](https://mp.weixin.qq.com/s?__biz=Mzg4MzYxODkzMg==&mid=2247508338&idx=1&sn=bd9dd854c1752d68a6706b966058e707)
 > **状态**：基于原文 PDF + 中文解读整理

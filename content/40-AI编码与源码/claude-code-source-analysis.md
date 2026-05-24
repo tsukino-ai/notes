@@ -14,6 +14,11 @@ tags:
 > ⚠️ 来源声明：本文档基于 2025 年 4 月初泄露的 Claude Code 源码（内部代号 tengu），仅供个人技术学习研究。
 > 
 > 原始来源：https://github.com/anthropics/claude-code（官方仓库，非泄露版）
+> 
+> 配套社区学习资料（网站可直接阅读）：
+> - [[../99-工具与参考/repos/how-claude-code-works/index|how-claude-code-works — 源码架构深度解析]]
+> - [[../99-工具与参考/repos/claude-code-from-scratch/index|claude-code-from-scratch — 从零复现]]
+> - [[../99-工具与参考/repos/claude-code-book/index|claude-code-book — 系统性书籍]]
 
 ---
 

@@ -16,6 +16,12 @@ title: Agent 工程
 
 - [[架构研究/agents-course-framework-guide|Agent 框架对比与学习路径]] —— HF Agents Course 三框架（smolagents / LlamaIndex / LangGraph）对比
 
+## 外文精读对照
+
+- [[../99-工具与参考/ref-articles/agent-harness-engineering-survey-bilingual|Agent Harness Engineering 中英对照]]
+- [[../99-工具与参考/ref-articles/langgraph-overview-bilingual|LangGraph Overview 中英对照]]
+- [[../99-工具与参考/ref-articles/letta-stateful-agents-bilingual|Letta 中英对照]]
+
 ## 待补充主题
 
 - [[Agent设计模式]] —— ReAct、Plan-and-Execute 等模式
