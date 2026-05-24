@@ -196,7 +196,7 @@ graph LR
 
 > **知识库关联**：
 > - MemGPT 深度分析：[[2026-05-15-memgpt-towards-llms-as-operating-systems]]
-> - Letta（MemGPT 继任者）源码分析：[[2026-05-15-letta-source-code-analysis]]
+> - Letta（MemGPT 继任者）源码分析：[[letta-source-analysis]]
 > - 上下文压缩策略：[[2026-05-15-llm-context-compression-strategies]]
 
 #### 长周期任务的特殊处理
@@ -223,7 +223,7 @@ graph LR
 | 图组合 | LangGraph | 用有向图定义 Agent 之间的流转关系 |
 | 工作流编排 | — | 预定义的执行流程，确定性更强 |
 
-> **知识库关联**：LangGraph 核心概念与实战：[[LangGraph/核心概念]]、[[LangGraph/Router-Specialist实战]]
+> **知识库关联**：LangGraph 核心概念与实战：[[langgraph/核心概念]]、[[langgraph/Router-Specialist实战]]
 
 #### 全生命周期任务流水线
 
@@ -411,9 +411,9 @@ graph LR
 | 论文概念 | 知识库对应内容 | 关联说明 |
 |---|---|---|
 | MemGPT / 长期记忆 | [[2026-05-15-memgpt-towards-llms-as-operating-systems]] | MemGPT 是 Context 层长期记忆的典型实现 |
-| Letta / 状态化 Agent | [[2026-05-15-letta-source-code-analysis]] | Letta 是 MemGPT 的继任者，提供了更完整的 Agent 状态管理 |
+| Letta / 状态化 Agent | [[letta-source-analysis]] | Letta 是 MemGPT 的继任者，提供了更完整的 Agent 状态管理 |
 | 上下文压缩 | [[2026-05-15-llm-context-compression-strategies]] | 长周期任务中防止上下文漂移的关键技术 |
-| LangGraph / 编排 | [[LangGraph/核心概念]] | Lifecycle 层多智能体编排的代表框架 |
+| LangGraph / 编排 | [[langgraph/核心概念]] | Lifecycle 层多智能体编排的代表框架 |
 | MCP / 工具协议 | （可补充） | Tool 层标准化的重要协议 |
 | ReAct / 内循环 | [[架构研究/Autonomous-Agents]] | 单智能体基础交互模式 |
 | AI Coding CLI | [[AI-Coding-CLI工具/index]] | 实际产品中的 Harness 工程实践 |

@@ -204,7 +204,7 @@ https://github.com/lintsinghua/claude-code-book
 
 ## 与知识库已有内容的关联
 
-- [[claude-code-源码解析]] — 基于泄露源码的直接目录结构分析（互补：已有笔记侧重"源码长什么样"，这三个项目侧重"为什么这样设计"和"怎么动手复现"）
+- [[claude-code-source-analysis]] — 基于泄露源码的直接目录结构分析（互补：已有笔记侧重"源码长什么样"，这三个项目侧重"为什么这样设计"和"怎么动手复现"）
 - [[30-Agent工程/架构研究/agent-memory-design-references|agent-memory-design-references]] — 记忆系统设计可交叉对照
 - [[30-Agent工程/架构研究/agents-course-framework-guide|agents-course-framework-guide]] — Agent 框架通用设计模式对照
 - [[99-工具与参考/ref-articles/agent-harness-engineering-survey-bilingual|agent-harness-engineering-survey]] — Agent Harness 工程化综述

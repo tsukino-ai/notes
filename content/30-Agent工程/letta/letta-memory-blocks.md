@@ -58,8 +58,8 @@ tags:
 ## 与知识库中已有内容的潜在关联
 
 - [[30-Agent工程/架构研究/agent-memory-design-references.md]] — 本文是该笔记的核心参考来源（#3 Memory Blocks）
-- [[30-Agent工程/架构研究/Autonomous-Agents.md]] — Memory 章节中提到的记忆流、反思循环可与 Memory Blocks 互补
-- [[30-Agent工程/LangGraph/Deep-Agents.md]] — Deep Agents 的 MemoryMiddleware 与 Letta 记忆块是同一设计趋势的不同实现
+- [[30-Agent工程/架构研究/autonomous-agents.md]] — Memory 章节中提到的记忆流、反思循环可与 Memory Blocks 互补
+- [[30-Agent工程/langgraph/deep-agents.md]] — Deep Agents 的 MemoryMiddleware 与 Letta 记忆块是同一设计趋势的不同实现
 - [[40-AI编码与源码/2026-05-15-crush-source.md]] — Crush 的 session/workspace 管理也涉及上下文隔离，可与 Memory Blocks 对比
 - [[10-LLM基础/2026-05-15-memgpt-towards-llms-as-operating-systems.md]] — Memory Blocks 的理论源头
 

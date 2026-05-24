@@ -16,7 +16,7 @@ title: LLM 基础
 
 ## 参考翻译
 
-- [[ref-articles/why-we-think-bilingual|Why We Think 中英对照]]
+- [[../99-工具与参考/ref-articles/why-we-think-test-time-compute-bilingual|Why We Think 中英对照]]
 
 ## 待补充笔记
 

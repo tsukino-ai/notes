@@ -85,7 +85,7 @@ Agent = **Brain (AI Model)** + **Body (Tools/Capabilities)**
 | **Action 形式** | Python 代码（首选）或 JSON | 工具调用 + 工作流事件 | 节点函数 + 条件边 |
 | **适用场景** | 快速原型、简单逻辑 | 数据检索、RAG、知识库 | 复杂工作流、生产部署 |
 | **控制粒度** | 自由度高（Code Agent） | 中等（Workflow 驱动） | 精确控制（图结构） |
-| **本地笔记** | — | — | [[LangGraph/index\|LangGraph]] |
+| **本地笔记** | — | — | [[langgraph/index\|LangGraph]] |
 
 ---
 
@@ -269,11 +269,11 @@ Unit 3: Agentic RAG 项目
 | HF 课程主题 | 本地深入方向 |
 |-----------|------------|
 | ReAct 循环 | [[架构研究/agent-memory-design-references\|Agent 记忆架构参考文献]] |
-| LangGraph 状态图 | [[LangGraph/index\|LangGraph 学习笔记]] |
+| LangGraph 状态图 | [[langgraph/index\|LangGraph 学习笔记]] |
 | Agentic RAG | [[../20-RAG工程/rag-evolution\|RAG 演进全景]] |
 | MCP 工具协议 | 待补充 [[MCP协议详解\|MCP 协议详解]] |
 | Tool Calling | 待补充 [[Tool-Calling模式\|Tool-Calling 模式]] |
-| Java Agent 生产实践 | [[Java-AI-生态/yu-ai-code-mother\|yu-ai-code-mother 架构分析]] |
+| Java Agent 生产实践 | [[java-ai-ecosystem/yu-ai-code-mother\|yu-ai-code-mother 架构分析]] |
 
 ---
 

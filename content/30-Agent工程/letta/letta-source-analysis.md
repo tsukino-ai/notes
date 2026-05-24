@@ -548,10 +548,10 @@ graph TD
 | 已有笔记 | 关联点 |
 |---|---|
 | `10-LLM基础/2026-05-15-memgpt-towards-llms-as-operating-systems.md` | MemGPT 论文是 Letta 的理论基础，本文是工程实现 |
-| `10-LLM基础/2026-05-15-letta-memory-blocks.md` | Block-based memory 的源码实现细节 |
-| `10-LLM基础/2026-05-15-letta-stateful-agents.md` | Stateful Agent 的设计在源码中的落地 |
+| `10-LLM基础/letta-memory-blocks.md` | Block-based memory 的源码实现细节 |
+| `10-LLM基础/letta-stateful-agents.md` | Stateful Agent 的设计在源码中的落地 |
 | `30-Agent工程/架构研究/agent-memory-design-references.md` | Letta 是 Agent 内存架构的最佳实践参考 |
-| `30-Agent工程/LangGraph/核心概念.md` | LangGraph 用图编排状态，Letta 用 Block 管理记忆——两种状态化范式对比 |
+| `30-Agent工程/langgraph/core-concepts.md` | LangGraph 用图编排状态，Letta 用 Block 管理记忆——两种状态化范式对比 |
 
 ---
 

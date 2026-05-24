@@ -145,10 +145,10 @@ tags:
 |------|---------|---------|
 | MCP (Model Context Protocol) | 标准化工具接口，跨框架复用 | 待补充 [[../30-Agent工程/MCP协议详解\|MCP 协议详解]] |
 | A2A (Agent-to-Agent) | Google 提出的 Agent 间通信协议 | — |
-| LangGraph | 状态图编排，生产级工作流 | [[../30-Agent工程/LangGraph/index\|LangGraph]] |
+| LangGraph | 状态图编排，生产级工作流 | [[../30-Agent工程/langgraph/index\|LangGraph]] |
 | LlamaIndex | 数据增强 Agent 工具链 | — |
 
-> 🔗 本地关联：[[../30-Agent工程/架构研究/agent-memory-design-references\|Agent 记忆架构参考文献]]、[[../30-Agent工程/Java-AI-生态/yu-ai-code-mother\|yu-ai-code-mother 架构分析]]
+> 🔗 本地关联：[[../30-Agent工程/架构研究/agent-memory-design-references\|Agent 记忆架构参考文献]]、[[../30-Agent工程/java-ai-ecosystem/yu-ai-code-mother\|yu-ai-code-mother 架构分析]]
 
 ### 3.5 推理优化
 
@@ -230,10 +230,10 @@ SFT (LoRA/QLoRA) + DPO/GRPO
 | 本课程模块 | 本地对应笔记 |
 |-----------|------------|
 | RAG / Advanced RAG | [[../20-RAG工程/rag-evolution\|RAG 演进全景]] |
-| Agents / LangGraph | [[../30-Agent工程/LangGraph/index\|LangGraph]] |
+| Agents / LangGraph | [[../30-Agent工程/langgraph/index\|LangGraph]] |
 | Agent Memory | [[../30-Agent工程/架构研究/agent-memory-design-references\|Agent 记忆架构参考文献]] |
 | Test-Time Compute | [[../10-LLM基础/why-we-think-test-time-compute\|Test-Time Compute]] |
-| Java AI 生态 | [[../30-Agent工程/Java-AI-生态/index\|Java AI 生态]] |
+| Java AI 生态 | [[../30-Agent工程/java-ai-ecosystem/index\|Java AI 生态]] |
 | Hallucination | [[../10-LLM基础/extrinsic-hallucinations\|外在幻觉]] |
 
 ---

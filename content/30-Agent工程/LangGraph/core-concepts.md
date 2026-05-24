@@ -9,11 +9,11 @@ tags:
   - workflow
 ---
 
-> [📖 中英段落对照：Overview](ref-articles/langgraph-overview-bilingual.md)
-> [📖 中英段落对照：Graph API](ref-articles/langgraph-graph-api-bilingual.md)
-> [📖 中英段落对照：Persistence](ref-articles/langgraph-persistence-bilingual.md)
-> [📖 中英段落对照：Workflows & Agents](ref-articles/langgraph-workflows-agents-bilingual.md)
-> [📖 中英段落对照：Durable Execution](ref-articles/durable-execution-bilingual.md)
+> [📖 中英段落对照：Overview](../../99-工具与参考/ref-articles/langgraph-overview-bilingual.md)
+> [📖 中英段落对照：Graph API](../../99-工具与参考/ref-articles/langgraph-graph-api-bilingual.md)
+> [📖 中英段落对照：Persistence](../../99-工具与参考/ref-articles/langgraph-persistence-bilingual.md)
+> [📖 中英段落对照：Workflows & Agents](../../99-工具与参考/ref-articles/langgraph-workflows-agents-bilingual.md)
+> [📖 中英段落对照：Durable Execution](../../99-工具与参考/ref-articles/langgraph-durable-execution-bilingual.md)
 
 ## LangGraph 是什么
 

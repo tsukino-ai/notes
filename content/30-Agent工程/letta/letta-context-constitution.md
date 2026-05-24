@@ -53,9 +53,9 @@ tags:
 ## 与知识库中已有内容的潜在关联
 
 - [[30-Agent工程/架构研究/agent-memory-design-references.md]] — 本文是该笔记第一类参考的核心来源（#3 Context Constitution）
-- [[30-Agent工程/架构研究/Autonomous-Agents.md]] — 记忆层的四层模型与 Context Constitution 的稀缺资源管理互补
-- [[10-LLM基础/2026-05-15-letta-stateful-agents.md]] — 上下文宪法的上层原则，Stateful Agents 是其实现基础
-- [[10-LLM基础/2026-05-15-letta-memory-blocks.md]] — Memory Blocks 是 Constitution 中"上下文作为稀缺资源"的具体工程实现
+- [[30-Agent工程/架构研究/autonomous-agents.md]] — 记忆层的四层模型与 Context Constitution 的稀缺资源管理互补
+- [[10-LLM基础/letta-stateful-agents.md]] — 上下文宪法的上层原则，Stateful Agents 是其实现基础
+- [[10-LLM基础/letta-memory-blocks.md]] — Memory Blocks 是 Constitution 中"上下文作为稀缺资源"的具体工程实现
 
 ## 待深入研究
 

@@ -8,8 +8,8 @@ title: AI 编码与源码
 
 ## 核心方向
 
-- [[AI-Coding-CLI工具/index|AI Coding CLI 工具]] —— AI 编程 CLI 工具源码解析
-- [[编码规范框架/index|编码规范框架]] —— AI 编码规范与 Spec 框架源码解析
+- [[ai-coding-cli/index|AI Coding CLI 工具]] —— AI 编程 CLI 工具源码解析
+- [[ai-coding-specs/index|编码规范框架]] —— AI 编码规范与 Spec 框架源码解析
 
 ## 待补充主题
 

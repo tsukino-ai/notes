@@ -9,7 +9,7 @@ tags:
   - workflow
 ---
 
-> [📖 中英段落对照阅读](ref-articles/durable-execution-bilingual.md)
+> [📖 中英段落对照阅读](../../99-工具与参考/ref-articles/langgraph-durable-execution-bilingual.md)
 
 ## 核心概念
 

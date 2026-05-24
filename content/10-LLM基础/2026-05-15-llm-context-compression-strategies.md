@@ -471,8 +471,8 @@ Letta 在《Context Constitution》中提出了更激进的愿景——**Memory-
 ## 八、与知识库其他笔记的关联
 
 - **[[2026-05-15-memgpt-towards-llms-as-operating-systems]]** — MemGPT 论文核心概念
-- **[[2026-05-15-letta-source-code-analysis]]** — Letta 源码架构详细分析
-- **[[2026-05-15-letta-context-constitution]]** — Letta 的上下文宪法原则
-- **[[2026-05-15-letta-memory-blocks]]** — Memory Blocks 的工程设计
-- **[[2026-05-15-letta-stateful-agents]]** — Stateful Agents 的理论基础
+- **[[letta-source-analysis]]** — Letta 源码架构详细分析
+- **[[letta-context-constitution]]** — Letta 的上下文宪法原则
+- **[[letta-memory-blocks]]** — Memory Blocks 的工程设计
+- **[[letta-stateful-agents]]** — Stateful Agents 的理论基础
 - **[[../30-Agent工程/架构研究/agent-memory-design-references]]** — Agent 记忆架构参考来源汇总

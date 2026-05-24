@@ -60,7 +60,7 @@ tags:
 
 > 💡 **与已有笔记关联**：
 > - `agent-basis.md` 中的 **ReAct / Plan-and-Execute / Reflection** 可与 `30-Agent工程/理论框架/` 下的内容交叉验证
-> - `mcp.md` 可与 `30-Agent工程/Java-AI-生态/` 下的 Spring AI / LangChain4j 笔记配合阅读
+> - `mcp.md` 可与 `30-Agent工程/java-ai-ecosystem/` 下的 Spring AI / LangChain4j 笔记配合阅读
 > - `harness-engineering.md` 提出的 **Agent = Model + Harness** 等式非常有启发性，建议精读
 
 ---

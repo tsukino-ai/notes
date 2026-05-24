@@ -54,8 +54,8 @@ LLM 的下一个重大突破不会来自更大的模型，而是来自**能够�
 ## 与知识库中已有内容的潜在关联
 
 - [[30-Agent工程/架构研究/agent-memory-design-references.md]] — 本文是该笔记第一类参考的核心来源之一
-- [[30-Agent工程/架构研究/Autonomous-Agents.md]] — 有状态 Agent 与其中 Short-term / Long-term 记忆映射一致
-- [[30-Agent工程/LangGraph/Deep-Agents.md]] — Deep Agents 的 StoreBackend 长期记忆与 Stateful Agents 理念一致
+- [[30-Agent工程/架构研究/autonomous-agents.md]] — 有状态 Agent 与其中 Short-term / Long-term 记忆映射一致
+- [[30-Agent工程/langgraph/deep-agents.md]] — Deep Agents 的 StoreBackend 长期记忆与 Stateful Agents 理念一致
 - [[20-RAG工程/rag-evolution.md]] — "长上下文 vs RAG 之争"的深层原因：RAG 的上下文污染问题
 - [[40-AI编码与源码/2026-05-15-kimi-cli-source.md]] — kimi-cli 的 streamingjson 和 context 压缩也是上下文管理的工程实践
 

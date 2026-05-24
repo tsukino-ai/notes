@@ -8,8 +8,8 @@ title: Agent 工程
 
 ## 核心方向
 
-- [[LangGraph/index|LangGraph]] —— Python 状态图框架，当前主攻方向
-- [[Java-AI-生态/index|Java AI 生态]] —— Spring AI / LangChain4j 全栈补充
+- [[langgraph/index|LangGraph]] —— Python 状态图框架，当前主攻方向
+- [[java-ai-ecosystem/index|Java AI 生态]] —— Spring AI / LangChain4j 全栈补充
 - [[架构研究/index|架构研究]] —— 跨框架参考项目与论文
 
 ## 课程与框架参考

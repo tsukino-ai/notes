@@ -230,4 +230,4 @@ Deep Agents 的设计体现了 Agent 框架的几个关键趋势：
 - [[核心概念]] — LangGraph 底层机制（StateGraph、Pregel、Checkpoint）
 - [[Router-Specialist实战]] — 子 Agent 委派的另一种实现范式
 - [[../架构研究/DeerFlow|DeerFlow]] — 字节跳动的 Agent Harness
-- [[../Java-AI-生态/Spring-AI-Alibaba|Spring AI Alibaba]] — Java 侧的 Agent OS
+- [[../java-ai-ecosystem/Spring-AI-Alibaba|Spring AI Alibaba]] — Java 侧的 Agent OS
