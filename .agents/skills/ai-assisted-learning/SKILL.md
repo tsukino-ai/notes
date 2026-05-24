@@ -98,7 +98,16 @@ tags:
 **Repository path:**
 1. `git clone --depth 1 <url> .temp/repos/<repo-name>/`（`<repo-name>` 全小写）
 2. `rm -rf .temp/repos/<repo-name>/.git/`
-3. `mv .temp/repos/<repo-name>/ _refs/repos/<repo-name>/`
+3. `rm -rf .temp/repos/<repo-name>/node_modules/`（如存在）
+4. `mv .temp/repos/<repo-name>/ content/99-工具与参考/repos/<repo-name>/`
+5. **给所有 `.md` 文件添加 frontmatter**：遍历仓库内所有 `.md`，提取第一个 `# ` 标题作为 `title`，补充 `author`（仓库作者）、`date`（今天）、`source`（GitHub 文件 URL）、`tags`（根据仓库主题）
+6. **创建 `index.md` 导航页**：汇总仓库内的核心文档，提供目录索引
+
+> **为什么直接放到 `content/` 而非 `_refs/repos/`？**
+> - 用户需要在 Quartz 网站上直接阅读这些仓库原文
+> - `_refs/` 目录不会被 Quartz 构建，网站上无法访问
+> - 放入 `content/99-工具与参考/repos/` 后，Quartz 自动构建为网页，Obsidian 也可直接浏览
+> - 代码文件虽不被 Quartz 渲染为网页，但在 Obsidian 中可直接打开阅读，上下文完整
 
 **Repository 元数据获取（强制）：**
 - 通过 GitHub API (`https://api.github.com/repos/{owner}/{repo}`) 查询并记录真实的 **Stars、Forks、Open Issues** 数量
@@ -217,7 +226,7 @@ git push origin main
 Phase 5 完成后，执行最终 commit：
 
 ```bash
-git add content/ _refs/
+git add content/
 git commit -m "learn(<type>): <title>"
 git push origin main
 ```

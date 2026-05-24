@@ -17,10 +17,10 @@ tags:
 
 > 本文档汇总了三个围绕 Claude Code 源码的社区学习项目，构成从"读懂架构"→"动手复现"→"系统书籍"的完整学习路径。
 > 
-> 配套原始仓库已保存至：
-> - `_refs/repos/how-claude-code-works/`
-> - `_refs/repos/claude-code-from-scratch/`
-> - `_refs/repos/claude-code-book/`
+> 配套原始仓库已迁移至 content/ 目录，可直接在网站阅读：
+> - [[99-工具与参考/repos/how-claude-code-works/index|how-claude-code-works]]
+> - [[99-工具与参考/repos/claude-code-from-scratch/index|claude-code-from-scratch]]
+> - [[99-工具与参考/repos/claude-code-book/index|claude-code-book]]
 
 ---
 
@@ -170,7 +170,7 @@ https://github.com/lintsinghua/claude-code-book
 
 ### 路径 A：快速了解（1-2 天）
 
-1. 读 `how-claude-code-works` 的 [概述](_refs/repos/how-claude-code-works/docs/01-overview.md) + [主循环](_refs/repos/how-claude-code-works/docs/02-agent-loop.md) + [上下文工程](_refs/repos/how-claude-code-works/docs/03-context-engineering.md)
+1. 读 `how-claude-code-works` 的 [[99-工具与参考/repos/how-claude-code-works/docs/01-overview|概述]] + [[99-工具与参考/repos/how-claude-code-works/docs/02-agent-loop|主循环]] + [[99-工具与参考/repos/how-claude-code-works/docs/03-context-engineering|上下文工程]]
 2. 浏览 `claude-code-book` 的 Part 1（Ch01-04）
 
 ### 路径 B：动手复现（1-2 周）
