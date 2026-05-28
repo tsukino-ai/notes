@@ -1,0 +1,415 @@
+---
+title: "Reference: Agent class | Agents"
+description: "Documentation for the `Agent` class in Mastra, which provides the foundation for creating AI agents with various capabilities."
+packages:
+  - "@mastra/core"
+---
+
+# Agent class
+
+The `Agent` class is the foundation for creating AI agents in Mastra. It provides methods for generating responses, streaming interactions, and handling voice capabilities.
+
+## Usage examples
+
+### Basic string instructions
+
+Passing instructions as a string or array of strings is the simplest way to set up an agent. This is useful for straightforward use cases where you need to provide a prompt without additional configuration.
+
+```typescript title="src/mastra/agents/string-agent.ts"
+import { Agent } from '@mastra/core/agent'
+
+// String instructions
+export const agent = new Agent({
+  id: 'test-agent',
+  name: 'Test Agent',
+  // highlight-next-line
+  instructions: 'You are a helpful assistant that provides concise answers.',
+  model: '__GATEWAY_OPENAI_MODEL__',
+})
+
+// System message object
+export const agent2 = new Agent({
+  id: 'test-agent-2',
+  name: 'Test Agent 2',
+  // highlight-start
+  instructions: {
+    role: 'system',
+    content: 'You are an expert programmer',
+  },
+  // highlight-end
+  model: '__GATEWAY_OPENAI_MODEL__',
+})
+
+// Array of system messages
+export const agent3 = new Agent({
+  id: 'test-agent-3',
+  name: 'Test Agent 3',
+  // highlight-start
+  instructions: [
+    { role: 'system', content: 'You are a helpful assistant' },
+    { role: 'system', content: 'You have expertise in TypeScript' },
+  ],
+  // highlight-end
+  model: '__GATEWAY_OPENAI_MODEL__',
+})
+```
+
+### Provider-specific configurations
+
+Each model provider also enables a few different options, including prompt caching and configuring reasoning. You can set `providerOptions` on the instruction level to set different caching strategy per system instruction/prompt.
+
+```typescript title="src/mastra/agents/core-message-agent.ts"
+import { Agent } from '@mastra/core/agent'
+
+export const agent = new Agent({
+  id: 'core-message-agent',
+  name: 'Core Message Agent',
+  instructions: {
+    role: 'system',
+    content: 'You are a helpful assistant specialized in technical documentation.',
+    // highlight-start
+    providerOptions: {
+      openai: {
+        reasoningEffort: 'low',
+      },
+    },
+    // highlight-end
+  },
+  model: '__GATEWAY_OPENAI_MODEL__',
+})
+```
+
+### Mixed instruction formats
+
+```typescript title="src/mastra/agents/multi-message-agent.ts"
+import { Agent } from '@mastra/core/agent'
+
+// This could be customizable based on the user
+const preferredTone = {
+  role: 'system',
+  content: 'Always maintain a professional and empathetic tone.',
+}
+
+export const agent = new Agent({
+  id: 'multi-message-agent',
+  name: 'Multi Message Agent',
+  instructions: [
+    { role: 'system', content: 'You are a customer service representative.' },
+    preferredTone,
+    {
+      role: 'system',
+      content: 'Escalate complex issues to human agents when needed.',
+      providerOptions: {
+        anthropic: { cacheControl: { type: 'ephemeral' } },
+      },
+    },
+  ],
+  model: '__GATEWAY_ANTHROPIC_MODEL_SONNET__',
+})
+```
+
+## Thread signals
+
+Use Agent signals to send real-time context into a memory thread. Signals are useful when a user adds input while an agent is already streaming, or when another process needs to add structured context to the thread.
+
+A `user-message` signal represents user input. When the target thread is running, Mastra delivers the signal into the active agent loop. When the thread is idle, Mastra starts a stream with the signal as the first input by default.
+
+```typescript title="src/mastra/signals.ts"
+const subscription = await agent.subscribeToThread({
+  resourceId: 'user-123',
+  threadId: 'thread-abc',
+})
+
+void (async () => {
+  for await (const chunk of subscription.stream) {
+    console.log(chunk)
+  }
+})()
+
+agent.sendSignal(
+  { type: 'user-message', contents: 'Use the latest customer note too.' },
+  {
+    resourceId: 'user-123',
+    threadId: 'thread-abc',
+    ifIdle: {
+      streamOptions: {
+        maxSteps: 3,
+      },
+    },
+  },
+)
+```
+
+Use `attributes` to identify different users in a shared thread. The signal type and attributes are rendered as XML so the model can distinguish who said what:
+
+```typescript
+agent.sendSignal(
+  {
+    type: 'user',
+    contents: 'Can we simplify the API surface?',
+    attributes: { name: 'Devin', from: 'slack' },
+  },
+  { resourceId: 'user-123', threadId: 'thread-abc' },
+)
+```
+
+The model receives this as:
+
+```xml
+<user name="Devin" from="slack">Can we simplify the API surface?</user>
+```
+
+The UI sees just the message contents but can also read `attributes` and `metadata` off the signal message for custom rendering (e.g. showing user names, avatars, or platform badges).
+
+### `sendSignal(signal, options)`
+
+Sends a signal to an active run or memory thread.
+
+<PropertiesTable
+  content={[
+  {
+    name: 'signal',
+    type: "{ type: 'user-message' | 'system-reminder' | string; contents: string | Array<TextPart | FilePart>; attributes?: Record<string, JSONValue>; metadata?: Record<string, unknown>; providerOptions?: ProviderMetadata }",
+    description:
+      '`user-message` signals without attributes are treated as plain user input. All other signals — including `user-message` with `attributes`, `system-reminder`, and custom types — are wrapped in an XML element named after the signal type with `attributes` rendered as XML attributes (e.g. `<user name="Devin" from="slack">message</user>`). The model sees the XML; the UI sees the raw contents and can read `attributes` for custom rendering. `providerOptions` is attached to the resulting prompt turn and persisted on the stored signal message.',
+  },
+  {
+    name: 'options.runId',
+    type: 'string',
+    isOptional: true,
+    description: 'Run ID to target directly. Use this when you already know the active run ID.',
+  },
+  {
+    name: 'options.resourceId',
+    type: 'string',
+    isOptional: true,
+    description: 'Resource ID for the memory thread. Required with `threadId` for thread-targeted signals.',
+  },
+  {
+    name: 'options.threadId',
+    type: 'string',
+    isOptional: true,
+    description: 'Thread ID to target. Required with `resourceId` for thread-targeted signals.',
+  },
+  {
+    name: 'options.ifActive.behavior',
+    type: "'deliver' | 'persist' | 'discard'",
+    isOptional: true,
+    description: 'Controls what happens when the target thread is active. Defaults to `deliver`.',
+  },
+  {
+    name: 'options.ifIdle.behavior',
+    type: "'wake' | 'persist' | 'discard'",
+    isOptional: true,
+    description: 'Controls what happens when the target thread is idle. Defaults to `wake`.',
+  },
+  {
+    name: 'options.ifIdle.streamOptions',
+    type: 'AgentExecutionOptions',
+    isOptional: true,
+    description:
+      'Options for the stream that starts when `ifIdle.behavior` is `wake`. Mastra uses the top-level `resourceId` and `threadId` for memory context.',
+  },
+]}
+/>
+
+Returns `{ accepted: true, runId: string, signal: CreatedAgentSignal, persisted?: Promise<void> }`. `persisted` is only present for `persist` behavior and resolves when Mastra finishes writing the signal to memory.
+
+### `subscribeToThread(options)`
+
+Subscribes to raw stream chunks for a memory thread. Use this before calling `sendSignal()` when you need to render stream output, observe signal echoes, or abort the active run.
+
+<PropertiesTable
+  content={[
+  {
+    name: 'options.resourceId',
+    type: 'string',
+    isOptional: true,
+    description: 'Resource ID for the memory thread.',
+  },
+  {
+    name: 'options.threadId',
+    type: 'string',
+    description: 'Thread ID to subscribe to.',
+  },
+]}
+/>
+
+Returns an `AgentThreadSubscription` object with these members:
+
+<PropertiesTable
+  content={[
+  {
+    name: 'stream',
+    type: 'AsyncIterable<AgentChunkType>',
+    description: 'Raw agent stream chunks for the subscribed thread.',
+  },
+  {
+    name: 'activeRunId',
+    type: '() => string | null',
+    description: 'Returns the active run ID for the thread, or `null` when no run is active.',
+  },
+  {
+    name: 'abort',
+    type: '() => boolean',
+    description: 'Aborts the active run for the thread. Returns `true` when a run was aborted.',
+  },
+  {
+    name: 'unsubscribe',
+    type: '() => void',
+    description: 'Stops the subscription without aborting the active run.',
+  },
+]}
+/>
+
+## Constructor parameters
+
+<PropertiesTable
+  content={[
+  {
+    name: 'id',
+    type: 'string',
+    isOptional: true,
+    description: 'Unique identifier for the agent. Defaults to `name` if not provided.',
+  },
+  {
+    name: 'name',
+    type: 'string',
+    isOptional: false,
+    description: 'Display name for the agent. Used as the identifier if `id` is not provided.',
+  },
+  {
+    name: 'description',
+    type: 'string',
+    isOptional: true,
+    description: "Optional description of the agent's purpose and capabilities.",
+  },
+  {
+    name: 'metadata',
+    type: 'Record<string, unknown> | ({ requestContext: RequestContext }) => Record<string, unknown> | Promise<Record<string, unknown>>',
+    isOptional: true,
+    description:
+      'Optional metadata for classifying or filtering the agent in clients. Can be a static record or a function that resolves the metadata from the request context.',
+  },
+  {
+    name: 'instructions',
+    type: 'SystemMessage | ({ requestContext: RequestContext }) => SystemMessage | Promise<SystemMessage>',
+    isOptional: false,
+    description: `Instructions that guide the agent's behavior. Can be a string, array of strings, system message object,
+array of system messages, or a function that returns any of these types dynamically.
+SystemMessage types: string | string[] | CoreSystemMessage | CoreSystemMessage[] | SystemModelMessage | SystemModelMessage[]`,
+  },
+  {
+    name: 'model',
+    type: 'MastraLanguageModel | ({ requestContext: RequestContext }) => MastraLanguageModel | Promise<MastraLanguageModel>',
+    isOptional: false,
+    description: 'The language model used by the agent. Can be provided statically or resolved at runtime.',
+  },
+  {
+    name: 'agents',
+    type: 'Record<string, Agent> | ({ requestContext: RequestContext }) => Record<string, Agent> | Promise<Record<string, Agent>>',
+    isOptional: true,
+    description: 'Subagents that the agent can access. Can be provided statically or resolved dynamically.',
+  },
+  {
+    name: 'tools',
+    type: 'ToolsInput | ({ requestContext: RequestContext }) => ToolsInput | Promise<ToolsInput>',
+    isOptional: true,
+    description: 'Tools that the agent can access. Can be provided statically or resolved dynamically.',
+  },
+  {
+    name: 'transform',
+    type: 'ToolPayloadTransformPolicy',
+    isOptional: true,
+    description:
+      'Shared policy for transforming tool payloads before display streams or user-visible transcript messages receive them. Use per-tool `transform` on `createTool()` for tool-local rules.',
+  },
+  {
+    name: 'workflows',
+    type: 'Record<string, Workflow> | ({ requestContext: RequestContext }) => Record<string, Workflow> | Promise<Record<string, Workflow>>',
+    isOptional: true,
+    description: 'Workflows that the agent can execute. Can be static or dynamically resolved.',
+  },
+  {
+    name: 'defaultOptions',
+    type: 'AgentExecutionOptions | ({ requestContext: RequestContext }) => AgentExecutionOptions | Promise<AgentExecutionOptions>',
+    isOptional: true,
+    description: 'Default options used when calling `stream()` and `generate()`.',
+  },
+  {
+    name: 'defaultGenerateOptionsLegacy',
+    type: 'AgentGenerateOptions | ({ requestContext: RequestContext }) => AgentGenerateOptions | Promise<AgentGenerateOptions>',
+    isOptional: true,
+    description: 'Default options used when calling `generateLegacy()`.',
+  },
+  {
+    name: 'defaultStreamOptionsLegacy',
+    type: 'AgentStreamOptions | ({ requestContext: RequestContext }) => AgentStreamOptions | Promise<AgentStreamOptions>',
+    isOptional: true,
+    description: 'Default options used when calling `streamLegacy()`.',
+  },
+  {
+    name: 'mastra',
+    type: 'Mastra',
+    isOptional: true,
+    description: 'Reference to the Mastra runtime instance (injected automatically).',
+  },
+  {
+    name: 'scorers',
+    type: 'MastraScorers | ({ requestContext: RequestContext }) => MastraScorers | Promise<MastraScorers>',
+    isOptional: true,
+    description: 'Scoring configuration for runtime evaluation and telemetry. Can be static or dynamically provided.',
+  },
+  {
+    name: 'memory',
+    type: 'MastraMemory | ({ requestContext: RequestContext }) => MastraMemory | Promise<MastraMemory>',
+    isOptional: true,
+    description: 'Memory module used for storing and retrieving stateful context.',
+  },
+  {
+    name: 'voice',
+    type: 'CompositeVoice',
+    isOptional: true,
+    description: 'Voice settings for speech input and output.',
+  },
+  {
+    name: 'inputProcessors',
+    type: '(Processor | ProcessorWorkflow)[] | ({ requestContext: RequestContext }) => (Processor | ProcessorWorkflow)[] | Promise<(Processor | ProcessorWorkflow)[]>',
+    isOptional: true,
+    description:
+      'Input processors that can modify or validate messages before they are processed by the agent. Can be individual Processor objects or workflows created with `createWorkflow()` using ProcessorStepSchema.',
+  },
+  {
+    name: 'outputProcessors',
+    type: '(Processor | ProcessorWorkflow)[] | ({ requestContext: RequestContext }) => (Processor | ProcessorWorkflow)[] | Promise<(Processor | ProcessorWorkflow)[]>',
+    isOptional: true,
+    description:
+      'Output processors that can modify or validate messages from the agent before they are sent to the client. Can be individual Processor objects or workflows.',
+  },
+  {
+    name: 'maxProcessorRetries',
+    type: 'number',
+    isOptional: true,
+    description: 'Maximum number of times a processor can request retrying the LLM step.',
+  },
+  {
+    name: 'requestContextSchema',
+    type: 'StandardJSONSchemaV1',
+    isOptional: true,
+    description:
+      'Standard JSON Schema for validating request context values. When provided, the context is validated at the start of generate() or stream(), throwing a MastraError if validation fails.',
+  },
+]}
+/>
+
+## Returns
+
+<PropertiesTable
+  content={[
+  {
+    name: 'agent',
+    type: 'Agent<TAgentId, TTools>',
+    description: 'A new Agent instance with the specified configuration.',
+  },
+]}
+/>
