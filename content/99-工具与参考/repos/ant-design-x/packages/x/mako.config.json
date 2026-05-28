@@ -1,0 +1,9 @@
+{
+  "optimization": {
+    "skipModules": true,
+    "concatenateModules": false
+  },
+  "codeSplitting": {
+    "strategy": "auto"
+  }
+}

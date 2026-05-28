@@ -1,0 +1,125 @@
+import { clsx } from 'clsx';
+import React, { useMemo } from 'react';
+import { type FileCardProps, SemanticType } from '../FileCard';
+import { getSize } from '../utils';
+
+interface FileProps {
+  styles?: Partial<Record<SemanticType, React.CSSProperties>>;
+  classNames?: Partial<Record<SemanticType, string>>;
+  prefixCls?: string;
+  name?: string;
+  namePrefix?: string;
+  ext?: string;
+  size?: 'small' | 'default';
+  byte?: number;
+  src?: string;
+  type?: FileCardProps['type'];
+  description?: FileCardProps['description'];
+  icon?: React.ReactNode;
+  iconColor?: string;
+  onClick?: FileCardProps['onClick'];
+  mask?: FileCardProps['mask'];
+}
+
+const File: React.FC<FileProps> = (props) => {
+  const {
+    styles = {},
+    classNames = {},
+    prefixCls,
+    name,
+    namePrefix,
+    ext,
+    size,
+    byte,
+    src,
+    type,
+    description,
+    icon,
+    iconColor,
+    onClick,
+    mask,
+  } = props;
+  const compCls = `${prefixCls}-file`;
+
+  const mergedCls = clsx(compCls, classNames.file, {
+    [`${compCls}-pointer`]: !!onClick,
+    [`${compCls}-small`]: size === 'small',
+  });
+
+  const desc = useMemo(() => {
+    const sizeText = typeof byte === 'number' ? getSize(byte) : '';
+    const descriptionNode =
+      typeof description === 'function'
+        ? description({ size: sizeText, icon, src, type, name, namePrefix, nameSuffix: ext })
+        : description;
+
+    if (descriptionNode === false) {
+      return null;
+    }
+
+    return descriptionNode ?? sizeText;
+  }, [description, byte, icon, src, type, name, namePrefix, ext]);
+
+  const maskNode = useMemo(() => {
+    const sizeText = typeof byte === 'number' ? getSize(byte) : '';
+    const maskContent =
+      typeof mask === 'function'
+        ? mask({ size: sizeText, icon, src, type, name, namePrefix, nameSuffix: ext })
+        : mask;
+
+    return maskContent === false ? null : maskContent;
+  }, [mask, byte, icon, src, type, name, namePrefix, ext]);
+
+  const handleClick = React.useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      if (onClick) {
+        const size = typeof byte === 'number' ? getSize(byte) : '';
+        onClick(
+          {
+            size,
+            icon,
+            name,
+            namePrefix,
+            nameSuffix: ext,
+            src,
+            type,
+          },
+          event,
+        );
+      }
+    },
+    [onClick, byte, icon, name, namePrefix, ext, src, type],
+  );
+
+  return (
+    <div className={mergedCls} style={styles.file} onClick={handleClick}>
+      <div
+        className={clsx(`${compCls}-icon`, classNames.icon)}
+        style={{ color: iconColor, ...styles.icon }}
+      >
+        {icon}
+      </div>
+      <div className={`${compCls}-content`}>
+        <div className={clsx(`${compCls}-name`, classNames.name)} style={styles.name}>
+          <span className={`${compCls}-name-prefix`}>{namePrefix}</span>
+          <span className={`${compCls}-name-suffix`}>{ext}</span>
+        </div>
+        {desc !== null && desc !== undefined && (
+          <div
+            className={clsx(`${compCls}-description`, classNames.description)}
+            style={styles.description}
+          >
+            {desc}
+          </div>
+        )}
+      </div>
+      {maskNode !== null && maskNode !== undefined && (
+        <div className={`${compCls}-mask`}>
+          <div className={`${compCls}-mask-info`}>{maskNode}</div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default File;
