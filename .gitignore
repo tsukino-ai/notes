@@ -11,3 +11,10 @@ replit.nix
 
 # Temporary directories for skill processing
 .temp/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
